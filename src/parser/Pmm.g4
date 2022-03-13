@@ -19,11 +19,11 @@ program returns [Program ast] locals [List<Definition> def = new ArrayList<Defin
 definitions returns [List<Definition> ast = new ArrayList<Definition>()]: funcDef {$ast.add($funcDef.ast);}| varDef {$ast.addAll($varDef.ast);};
 
 mainFunc returns [FuncDefinition ast] locals [List<VarDefinition> varDecs = new ArrayList<VarDefinition>(),List<Statement> statements = new ArrayList<Statement>()]:
-    DEF='def' MAIN='main' '(' ')' ':' '{'(varDef {$varDecs.addAll($varDef.ast);})* (statement {$statements.add($statement.ast);})*'}' {$ast = new FuncDefinition(
+    DEF='def' MAIN='main' type '{'(varDef {$varDecs.addAll($varDef.ast);})* (statement {$statements.add($statement.ast);})*'}' {$ast = new FuncDefinition(
         new Variable( $MAIN.text, $MAIN.getLine(), $MAIN.getCharPositionInLine() + 1 ),
         $DEF.getLine(),
         $DEF.getCharPositionInLine() + 1,
-        new VoidType(),
+        $type.ast,
         $varDecs,
         $statements
     );};
@@ -58,25 +58,22 @@ type returns [Type ast] locals [Integer integer = new Integer(0,0),Character cha
         $tipo.ast,
         LexerHelper.lexemeToInt($INT_CONSTANT.text)
     );}
-    | ST='struct' '{' (recordFields {$records.add($recordFields.ast);})+ '}' { $ast = new Struct(
+    | ST='struct' '{' (recordFields {$records.addAll($recordFields.ast);})+ '}' { $ast = new Struct(
         $ST.getLine(),
         $ST.getCharPositionInLine() + 1,
         $records
     );}
     | LP='(' (var1=varDec {$defs.addAll($var1.ast);} (',' varN=varDec {$defs.addAll($varN.ast);})*)? ')' ':' (type{$ret = $type.ast;})? {$ast = new FunctionType(
         $LP.getLine(),
-        $LP.getCharPositionInLine(),
+        $LP.getCharPositionInLine() + 1,
         $defs,
         $ret
     );}
     ;
 
-recordFields returns [RecordField ast]: ID ':' type ';' { $ast = new RecordField(
-        $ID.text,
-        $type.ast
-    );};
+recordFields returns [List<RecordField> ast = new ArrayList<RecordField>()]: ID1=ID {$ast.add(new RecordField($ID1.text));} (',' IDN=ID {$ast.add(new RecordField($IDN.text));})* ':' type ';' {for(RecordField var : $ast){var.setType($type.ast);}};
 
-statement returns [Statement ast] locals [List<Expression> aux = new ArrayList<Expression>()]:
+statement returns [Statement ast] locals [List<Statement> elseBod = new ArrayList<Statement>(),List<Expression> aux = new ArrayList<Expression>()]:
     PRINT='print' (exp1=expression {$aux.add($exp1.ast);}(',' expN=expression {$aux.add($expN.ast);})*) ';' {$ast = new Print($PRINT.getLine(),$PRINT.getCharPositionInLine() + 1, $aux);}
     |INPUT='input' (expression (',' expression)*) ';' {$ast = new Input($INPUT.getLine(),$INPUT.getCharPositionInLine() + 1, $aux);}
     | left=expression '=' right=expression ';' { $ast = new Assignment(
@@ -85,12 +82,12 @@ statement returns [Statement ast] locals [List<Expression> aux = new ArrayList<E
         $left.ast,
         $right.ast
     );}
-    | IF='if' (expr=expression {$aux.add($expr.ast);})+ ':' ifBody=body ('else' elseBody=body)? { $ast = new IfElse(
+    | IF='if' (expr=expression {$aux.add($expr.ast);})+ ':' ifBody=body ('else' elseBody=body {$elseBod.addAll($elseBody.ast);})? { $ast = new IfElse(
         $IF.getLine(),
         $IF.getCharPositionInLine() + 1,
         $aux,
         $ifBody.ast,
-        $elseBody.ast
+        $elseBod
     );}
     | WHILE='while' (expr=expression {$aux.add($expr.ast);})+ ':' body { $ast = new While(
         $WHILE.getLine(),

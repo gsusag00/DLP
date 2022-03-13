@@ -7,9 +7,8 @@ public class RecordField {
     private String name;
     private Type type;
 
-    public RecordField(String name, Type type) {
+    public RecordField(String name) {
         this.name = name;
-        this.type = type;
     }
 
     public String getName() {
