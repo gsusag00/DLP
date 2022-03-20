@@ -10,12 +10,12 @@ import java.util.List;
 
 public class VarDefinition  extends BaseNode implements Definition{
 
-    private Variable variable;
+    private String name;
     private Type type;
 
-    public VarDefinition(int line, int column, Variable variable) {
+    public VarDefinition(int line, int column, String name) {
         super(line, column);
-        this.variable = variable;
+        this.name = name;
     }
 
     public void setType(Type type){
@@ -23,8 +23,8 @@ public class VarDefinition  extends BaseNode implements Definition{
     }
 
     @Override
-    public Variable getVariable() {
-        return variable;
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -34,6 +34,6 @@ public class VarDefinition  extends BaseNode implements Definition{
 
     @Override
     public String toString() {
-        return "Var Definition at line: " + getLine() + "Column: " + getColumn() + "Variable: " + variable.toString() + ". Type: " + type.toString();
+        return "Var Definition at line: " + getLine() + "Column: " + getColumn() + "Name: " + name + ". Type: " + type.toString();
     }
 }

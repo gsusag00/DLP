@@ -11,11 +11,11 @@ public class IfElse extends BaseNode implements Statement {
     private List<Statement> ifStatements;
     private List<Statement> elseStatements;
 
-    private List<Expression> expressions;
+    private Expression expression;
 
-    public IfElse(int line, int column, List<Expression> expressions, List<Statement> ifStatements, List<Statement> elseStatements) {
+    public IfElse(int line, int column, Expression expression, List<Statement> ifStatements, List<Statement> elseStatements) {
         super(line, column);
-        this.expressions = expressions;
+        this.expression = expression;
         this.ifStatements = ifStatements;
         this.elseStatements = elseStatements;
     }
@@ -36,16 +36,16 @@ public class IfElse extends BaseNode implements Statement {
         this.elseStatements = elseStatements;
     }
 
-    public List<Expression> getExpressions() {
-        return expressions;
+    public Expression getExpression() {
+        return expression;
     }
 
-    public void setExpressions(List<Expression> expressions) {
-        this.expressions = expressions;
+    public void setExpression(Expression expression) {
+        this.expression = expression;
     }
 
     @Override
     public String toString() {
-        return "If Else at line: " + getLine() + "Column: " + getColumn() + "If Statements: " + ifStatements.toString() + ". Else Statements: " + elseStatements.toString() + ". Expressions: " + expressions.toString();
+        return "If Else at line: " + getLine() + "Column: " + getColumn() + "If Statements: " + ifStatements.toString() + ". Else Statements: " + elseStatements.toString() + ". Expressions: " + expression.toString();
     }
 }

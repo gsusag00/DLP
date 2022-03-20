@@ -48,6 +48,18 @@ public interface PmmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFuncDef(PmmParser.FuncDefContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link PmmParser#funcVarList}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncVarList(PmmParser.FuncVarListContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmmParser#funcVar}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncVar(PmmParser.FuncVarContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PmmParser#varDef}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

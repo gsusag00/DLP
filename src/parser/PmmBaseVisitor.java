@@ -58,6 +58,20 @@ public class PmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Pm
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitFuncVarList(PmmParser.FuncVarListContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitFuncVar(PmmParser.FuncVarContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitVarDef(PmmParser.VarDefContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

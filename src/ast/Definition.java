@@ -4,6 +4,6 @@ import ast.expression.Variable;
 
 public interface Definition extends ASTNode {
 
-    Variable getVariable();
+    String getName();
     Type getType();
 }

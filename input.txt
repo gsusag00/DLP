@@ -3,7 +3,7 @@ i, j, n: int;
 c: char;
 
 # Empty function
-def p(): { }
+def p( ): { }
 
 def f(n: int,r: double): int {
   	real: double;

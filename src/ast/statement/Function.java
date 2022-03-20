@@ -10,11 +10,11 @@ import java.util.List;
 public class Function extends BaseNode implements Statement, Expression {
 
     private List<Expression> expressions;
-    private Variable variable;
+    private String name;
 
-    public Function(int line, int column,Variable variable, List<Expression> expressions) {
+    public Function(int line, int column,String name, List<Expression> expressions) {
         super(line, column);
-        this.variable = variable;
+        this.name = name;
         this.expressions = expressions;
     }
 
@@ -26,16 +26,16 @@ public class Function extends BaseNode implements Statement, Expression {
         this.expressions = expressions;
     }
 
-    public Variable getVariable() {
-        return variable;
+    public String getName() {
+        return name;
     }
 
-    public void setVariable(Variable variable) {
-        this.variable = variable;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return "Function at line: " + getLine() + "Column: " + getColumn() + ". Variable: " + variable.toString() + ". Expressions: " + expressions.toString();
+        return "Function at line: " + getLine() + "Column: " + getColumn() + ". Name: " + name + ". Expressions: " + expressions.toString();
     }
 }

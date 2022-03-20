@@ -12,6 +12,10 @@ public class Variable extends BaseNode implements Expression {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "Variable at line: " + getLine() + "Column: " + getColumn() + "Name: " + name;

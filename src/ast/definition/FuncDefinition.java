@@ -13,20 +13,20 @@ public class FuncDefinition extends BaseNode implements Definition, Statement {
 
     private List<Statement> statements;
     private List<VarDefinition> varDefinitions;
-    private Variable variable;
+    private String name;
     private Type type;
 
-    public FuncDefinition(Variable variable, int line, int column, Type type, List<VarDefinition> varDefinitions, List<Statement> statements) {
+    public FuncDefinition(String name, int line, int column, Type type, List<VarDefinition> varDefinitions, List<Statement> statements) {
         super(line, column);
-        this.variable = variable;
+        this.name = name;
         this.type = type;
         this.varDefinitions = varDefinitions;
         this.statements = statements;
     }
 
     @Override
-    public Variable getVariable() {
-        return variable;
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class FuncDefinition extends BaseNode implements Definition, Statement {
 
     @Override
     public String toString() {
-        return "Func Definition at line: " + getLine() + "Column: " + getColumn() + ". Statements: " + statements.toString() + ". Variable Definitions" + varDefinitions.toString() + ". Variable: " + variable.toString() + ". Type" + type.toString();
+        return "Func Definition at line: " + getLine() + "Column: " + getColumn() + ". Statements: " + statements.toString() + ". Variable Definitions" + varDefinitions.toString() + ". Name: " + name + ". Type" + type.toString();
     }
 
     public List<Statement> getStatements() {
@@ -55,8 +55,8 @@ public class FuncDefinition extends BaseNode implements Definition, Statement {
         this.varDefinitions = varDefinitions;
     }
 
-    public void setVariable(Variable variable) {
-        this.variable = variable;
+    public void setName(Variable variable) {
+        this.name = name;
     }
 
     public void setType(Type type) {
