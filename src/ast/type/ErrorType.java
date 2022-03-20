@@ -1,16 +1,21 @@
 package ast.type;
 
+import ast.BaseNode;
 import ast.Type;
+import ast.errorHandler.ErrorHandler;
 
-public class ErrorType implements Type {
+public class ErrorType extends BaseNode  implements Type {
 
-    @Override
-    public int getLine() {
-        return 0;
+    private String message;
+
+    public ErrorType(int line, int column, String message) {
+        super(line, column);
+        this.message = message;
+        ErrorHandler.getInstance().addError(this);
     }
 
     @Override
-    public int getColumn() {
-        return 0;
+    public String toString() {
+        return "Error at line: " + this.getLine() + " ,column: " + this.getColumn() + " ,message:" + message;
     }
 }

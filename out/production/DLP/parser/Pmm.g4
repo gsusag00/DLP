@@ -14,13 +14,10 @@ grammar Pmm;
     import ast.expression.Boolean;
 }
 
-/**
-TODO: CAMBIAR LA DEFINICION DEL MAIN PARA QUE NO PERMITA PARAMETROS
-**/
-
 program returns [Program ast] locals [List<Definition> def = new ArrayList<Definition>()]: (definitions {$def.addAll($definitions.ast);})+ mainFunc {$def.add($mainFunc.ast);} {$ast = new Program(0,0,$def);} EOF ;
 
-definitions returns [List<Definition> ast = new ArrayList<Definition>()]: funcDef {$ast.add($funcDef.ast);}| varDef {$ast.addAll($varDef.ast);};
+definitions returns [List<Definition> ast = new ArrayList<Definition>()]: funcDef {$ast.add($funcDef.ast);}
+    | varDef {$ast.addAll($varDef.ast);};
 
 mainFunc returns [FuncDefinition ast] locals [List<VarDefinition> varDecs = new ArrayList<VarDefinition>(),List<Statement> statements = new ArrayList<Statement>()]:
     DEF='def' MAIN='main' '():' '{'(varDef {$varDecs.addAll($varDef.ast);})* (statement {$statements.add($statement.ast);})*'}' {$ast = new FuncDefinition(
@@ -42,6 +39,10 @@ funcDef returns [FuncDefinition ast] locals [List<VarDefinition> varDecs = new A
         $statements
     );};
 
+    /**
+        Sinceramente no tengo ni puta idea de lo que esta pasando aqui. Preguntar a Miguel en clase.
+    */
+
 funcVarList returns [List<VarDefinition> ast= new ArrayList<VarDefinition>()]: (f1=funcVar {$ast.add($f1.ast);} (',' fn=funcVar {$ast.add($fn.ast);})*)?;
 
 funcVar returns [VarDefinition ast]: ID ':' type {$ast = new VarDefinition(
@@ -50,15 +51,22 @@ funcVar returns [VarDefinition ast]: ID ':' type {$ast = new VarDefinition(
          $ID.text
      ); $ast.setType($type.ast);};
 
-varDef returns [List<VarDefinition> ast = new ArrayList<VarDefinition>()]: varDec {$ast.addAll($varDec.ast);} ';';
+varDef returns [List<VarDefinition> ast = new ArrayList<VarDefinition>()]: varDec {
+    for(VarDefinition def: $varDec.ast){
+        if($ast.contains(def)){
+            new ErrorType(def.getLine(),def.getColumn(), "Error: variable duplicada");
+        } else {
+            $ast.add(def);
+        }
+    };}';';
 
 varDec returns [List<VarDefinition> ast = new ArrayList<VarDefinition>()]: ID1=ID { $ast.add(
-        new VarDefinition(
-                $ID1.getLine(),
-                $ID1.getCharPositionInLine() + 1,
-                $ID1.text
-            )
-        );} (',' IDN=ID{$ast.add( new VarDefinition($IDN.getLine(),$IDN.getCharPositionInLine() + 1, $IDN.text));})* ':' type {for(VarDefinition var : $ast){var.setType($type.ast);}};
+    new VarDefinition(
+            $ID1.getLine(),
+            $ID1.getCharPositionInLine() + 1,
+            $ID1.text
+        )
+    );} (',' IDN=ID{$ast.add( new VarDefinition($IDN.getLine(),$IDN.getCharPositionInLine() + 1, $IDN.text));})* ':' type {for(VarDefinition var : $ast){var.setType($type.ast);}};
 
 type returns [Type ast] locals [Integer integer = new Integer(0,0),Character character = new Character(0,0),Double doub = new Double(0,0),List<RecordField> records = new ArrayList<RecordField>()]:
     DOUBLE='double' { $ast = $doub;}
@@ -70,7 +78,15 @@ type returns [Type ast] locals [Integer integer = new Integer(0,0),Character cha
         $tipo.ast,
         LexerHelper.lexemeToInt($INT_CONSTANT.text)
     );}
-    | ST='struct' '{' (recordFields {$records.addAll($recordFields.ast);})+ '}' { $ast = new Struct(
+    | ST='struct' '{' (recordFields {
+        for(RecordField r: $recordFields.ast){
+            if($records.contains(r)){
+                new ErrorType($ST.getLine(),$ST.getCharPositionInLine() + 1, "Error: Campo duplicado");
+            }
+            else{
+                $records.add(r);
+            }
+        };})+ '}' { $ast = new Struct(
         $ST.getLine(),
         $ST.getCharPositionInLine() + 1,
         $records

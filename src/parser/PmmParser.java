@@ -626,7 +626,14 @@ public class PmmParser extends Parser {
 			{
 			setState(118);
 			((VarDefContext)_localctx).varDec = varDec();
-			_localctx.ast.addAll(((VarDefContext)_localctx).varDec.ast);
+
+			    for(VarDefinition def: ((VarDefContext)_localctx).varDec.ast){
+			        if(_localctx.ast.contains(def)){
+			            new ErrorType(def.getLine(),def.getColumn(), "Error: variable duplicada");
+			        } else {
+			            _localctx.ast.add(def);
+			        }
+			    };
 			setState(120);
 			match(T__9);
 			}
@@ -675,12 +682,12 @@ public class PmmParser extends Parser {
 			setState(122);
 			((VarDecContext)_localctx).ID1 = match(ID);
 			 _localctx.ast.add(
-			        new VarDefinition(
-			                ((VarDecContext)_localctx).ID1.getLine(),
-			                ((VarDecContext)_localctx).ID1.getCharPositionInLine() + 1,
-			                (((VarDecContext)_localctx).ID1!=null?((VarDecContext)_localctx).ID1.getText():null)
-			            )
-			        );
+			    new VarDefinition(
+			            ((VarDecContext)_localctx).ID1.getLine(),
+			            ((VarDecContext)_localctx).ID1.getCharPositionInLine() + 1,
+			            (((VarDecContext)_localctx).ID1!=null?((VarDecContext)_localctx).ID1.getText():null)
+			        )
+			    );
 			setState(129);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -816,7 +823,15 @@ public class PmmParser extends Parser {
 					{
 					setState(150);
 					((TypeContext)_localctx).recordFields = recordFields();
-					_localctx.records.addAll(((TypeContext)_localctx).recordFields.ast);
+
+					        for(RecordField r: ((TypeContext)_localctx).recordFields.ast){
+					            if(_localctx.records.contains(r)){
+					                new ErrorType(((TypeContext)_localctx).ST.getLine(),((TypeContext)_localctx).ST.getCharPositionInLine() + 1, "Error: Campo duplicado");
+					            }
+					            else{
+					                _localctx.records.add(r);
+					            }
+					        };
 					}
 					}
 					setState(155); 

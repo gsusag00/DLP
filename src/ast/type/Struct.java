@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Struct extends BaseNode implements Type {
 
+    //Posible cambio a un set?
     private List<RecordField> records;
 
     public Struct(int line, int column, List<RecordField> records) {
