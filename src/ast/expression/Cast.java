@@ -3,11 +3,13 @@ package ast.expression;
 import ast.BaseNode;
 import ast.Expression;
 import ast.Type;
+import ast.visitor.Visitor;
 
 public class Cast extends BaseNode implements Expression {
 
     private Type type;
     private Expression expression;
+    private boolean lValue;
 
     public Cast(Type type, Expression expression, int line, int column) {
         super(line, column);
@@ -34,5 +36,20 @@ public class Cast extends BaseNode implements Expression {
     @Override
     public String toString() {
         return "Cast at line: " + getLine() + "Column: " + getColumn() + ". Type:" + type.toString() + ". Expression=" + expression.toString();
+    }
+
+    @Override
+    public Object accept(Visitor v, Object p) {
+        return v.visit(this,p);
+    }
+
+    @Override
+    public boolean getLValue() {
+        return lValue;
+    }
+
+    @Override
+    public void setLValue(boolean lValue) {
+        this.lValue = lValue;
     }
 }

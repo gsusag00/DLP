@@ -3,6 +3,7 @@ package ast.type;
 import ast.BaseNode;
 import ast.Type;
 import ast.definition.VarDefinition;
+import ast.visitor.Visitor;
 
 import java.util.List;
 
@@ -35,5 +36,10 @@ public class FunctionType extends BaseNode implements Type {
     @Override
     public String toString() {
         return "Function Type at line: " + getLine() + "Column: " + getColumn() + ". Definitions: " + defs.toString() + ". Return Type: " + returnType.toString();
+    }
+
+    @Override
+    public Object accept(Visitor v, Object p) {
+        return v.visit(this,p);
     }
 }

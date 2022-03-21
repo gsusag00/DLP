@@ -2,6 +2,7 @@ package ast.type;
 
 import ast.BaseNode;
 import ast.Type;
+import ast.visitor.Visitor;
 
 public class RecordField extends BaseNode implements Type {
 
@@ -48,4 +49,10 @@ public class RecordField extends BaseNode implements Type {
     public String toString() {
         return "RecordField: . Name='" + name + ". Type" + type.toString();
     }
+
+    @Override
+    public Object accept(Visitor v, Object p) {
+        return v.visit(this,p);
+    }
+
 }

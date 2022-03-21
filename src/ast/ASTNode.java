@@ -1,7 +1,11 @@
 package ast;
 
-public interface ASTNode {
+import ast.visitor.Visitor;
+
+public interface ASTNode<TR,TP>{
 
     int getLine();
     int getColumn();
+    TR accept(Visitor v, TP p);
+
 }

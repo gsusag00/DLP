@@ -2,6 +2,7 @@ package ast.type;
 
 import ast.Type;
 import ast.BaseNode;
+import ast.visitor.Visitor;
 
 public class Array extends BaseNode implements Type {
 
@@ -33,5 +34,10 @@ public class Array extends BaseNode implements Type {
     @Override
     public String toString() {
         return "Array at line: " + getLine() + "Column: " + getColumn() + ". Array Type: " + arrayType.toString() + ". Dimension=" + dimension;
+    }
+
+    @Override
+    public Object accept(Visitor v, Object p) {
+        return v.visit(this,p);
     }
 }

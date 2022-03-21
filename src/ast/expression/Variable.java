@@ -2,10 +2,12 @@ package ast.expression;
 
 import ast.BaseNode;
 import ast.Expression;
+import ast.visitor.Visitor;
 
 public class Variable extends BaseNode implements Expression {
 
     private String name;
+    private boolean lValue;
 
     public Variable(String name, int line, int column) {
         super(line, column);
@@ -19,5 +21,20 @@ public class Variable extends BaseNode implements Expression {
     @Override
     public String toString() {
         return "Variable at line: " + getLine() + "Column: " + getColumn() + "Name: " + name;
+    }
+
+    @Override
+    public Object accept(Visitor v, Object p) {
+        return v.visit(this,p);
+    }
+
+    @Override
+    public boolean getLValue() {
+        return lValue;
+    }
+
+    @Override
+    public void setLValue(boolean lValue) {
+        this.lValue = lValue;
     }
 }

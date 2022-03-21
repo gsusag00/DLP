@@ -2,22 +2,13 @@ package ast.expression;
 
 import ast.BaseNode;
 import ast.Expression;
+import ast.visitor.Visitor;
 
 
-public class Operation extends BaseNode {
-
-     public Operation(int line, int column, Expression left, Expression right, String operator){
-         super(line,column);
-         this.left = left;
-         this.right = right;
-         this.operator = operator;
-     }
-
-     protected Expression left, right;
-     protected String operator;
+public abstract class Operation extends BaseNode implements Expression  {
 
 
-    public Expression DoOperation(){
-         return null;
-     }
+    public Operation(int line, int column) {
+        super(line, column);
+    }
 }

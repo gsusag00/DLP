@@ -1,6 +1,8 @@
 package ast;
 
-public class BaseNode implements ASTNode{
+import ast.visitor.Visitor;
+
+public abstract class BaseNode<TP,TR> implements ASTNode<TP,TR>{
 
     private int line;
     private int column;
@@ -19,4 +21,7 @@ public class BaseNode implements ASTNode{
     public int getColumn() {
         return column;
     }
+
+    @Override
+    public abstract TP accept(Visitor v, TR p);
 }

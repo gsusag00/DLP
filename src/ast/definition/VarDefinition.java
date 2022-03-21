@@ -5,6 +5,7 @@ import ast.Definition;
 import ast.Statement;
 import ast.Type;
 import ast.expression.Variable;
+import ast.visitor.Visitor;
 
 import java.util.List;
 
@@ -50,5 +51,10 @@ public class VarDefinition  extends BaseNode implements Definition{
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    @Override
+    public Object accept(Visitor v, Object p) {
+        return null;
     }
 }

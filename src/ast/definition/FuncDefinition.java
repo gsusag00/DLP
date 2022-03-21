@@ -5,11 +5,10 @@ import ast.Definition;
 import ast.Statement;
 import ast.Type;
 import ast.expression.Variable;
-
-import java.util.ArrayList;
+import ast.visitor.Visitor;
 import java.util.List;
 
-public class FuncDefinition extends BaseNode implements Definition, Statement {
+public class FuncDefinition<TR,TP> extends BaseNode<TP,TR> implements Definition {
 
     private List<Statement> statements;
     private List<VarDefinition> varDefinitions;
@@ -61,5 +60,10 @@ public class FuncDefinition extends BaseNode implements Definition, Statement {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    @Override
+    public TP accept(Visitor v, TR p) {
+        return null;
     }
 }

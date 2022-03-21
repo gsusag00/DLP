@@ -2,6 +2,7 @@ package ast.type;
 
 import ast.BaseNode;
 import ast.Type;
+import ast.visitor.Visitor;
 
 public class VoidType implements Type {
 
@@ -20,5 +21,10 @@ public class VoidType implements Type {
     @Override
     public String toString() {
         return "VoidType";
+    }
+
+    @Override
+    public Object accept(Visitor v, Object p) {
+        return v.visit(this,p);
     }
 }
