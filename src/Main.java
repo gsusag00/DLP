@@ -1,4 +1,5 @@
 import ast.errorHandler.ErrorHandler;
+import ast.visitor.TypeCheckingVisitor;
 import parser.*;
 
 import org.antlr.v4.runtime.*;
@@ -23,6 +24,9 @@ public class Main {
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		PmmParser parser = new PmmParser(tokens);
 		Program ast = parser.program().ast;
+
+		TypeCheckingVisitor tcVisitor = new TypeCheckingVisitor();
+		ast.accept(tcVisitor,null);
 
 		// * Check errors
 		if(ErrorHandler.getInstance().hasErrors()){

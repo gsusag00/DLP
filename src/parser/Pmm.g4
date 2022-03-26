@@ -14,7 +14,7 @@ grammar Pmm;
     import ast.expression.Boolean;
 }
 
-program returns [Program ast] locals [List<Definition> def = new ArrayList<Definition>()]: (definitions {$def.addAll($definitions.ast);})+ mainFunc {$def.add($mainFunc.ast);} {$ast = new Program(0,0,$def);} EOF ;
+program returns [Program ast] locals [List<Definition> def = new ArrayList<Definition>()]: (definitions {$def.addAll($definitions.ast);})* mainFunc {$def.add($mainFunc.ast);} {$ast = new Program(0,0,$def);} EOF ;
 
 definitions returns [List<Definition> ast = new ArrayList<Definition>()]: funcDef {$ast.add($funcDef.ast);}
     | varDef {$ast.addAll($varDef.ast);};
@@ -97,7 +97,7 @@ recordFields returns [List<RecordField> ast = new ArrayList<RecordField>()]: ID1
 
 statement returns [Statement ast] locals [List<Statement> elseBod = new ArrayList<Statement>(),List<Expression> aux = new ArrayList<Expression>()]:
     PRINT='print' (exp1=expression {$aux.add($exp1.ast);}(',' expN=expression {$aux.add($expN.ast);})*) ';' {$ast = new Print($PRINT.getLine(),$PRINT.getCharPositionInLine() + 1, $aux);}
-    |INPUT='input' (expression (',' expression)*) ';' {$ast = new Input($INPUT.getLine(),$INPUT.getCharPositionInLine() + 1, $aux);}
+    |INPUT='input' (exp1=expression {$aux.add($exp1.ast);}(',' expN=expression {$aux.add($expN.ast);})*) ';' {$ast = new Input($INPUT.getLine(),$INPUT.getCharPositionInLine() + 1, $aux);}
     | left=expression '=' right=expression ';' { $ast = new Assignment(
         $left.ast.getLine(),
         $left.ast.getColumn(),

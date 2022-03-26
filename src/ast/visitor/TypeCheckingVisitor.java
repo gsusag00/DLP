@@ -1,9 +1,7 @@
 package ast.visitor;
 
-import ast.Definition;
 import ast.Expression;
 import ast.Program;
-import ast.Statement;
 import ast.definition.FuncDefinition;
 import ast.definition.VarDefinition;
 import ast.expression.*;
@@ -14,213 +12,211 @@ import ast.type.Character;
 import ast.type.Double;
 import ast.type.Integer;
 
-public abstract class AbstractVisitor<TR,TP> implements Visitor<TR,TP>{
+public class TypeCheckingVisitor<TR,TP> extends AbstractVisitor<TR,TP> {
 
     @Override
     public TR visit(Program program, TP p) {
-        for(Definition def : program.getDefiniciones()){
-            def.accept(this,p);
-        }
+        super.visit(program,p);
         return null;
     }
 
     @Override
     public TR visit(FuncDefinition funcDef, TP p) {
-        funcDef.getType().accept(this,p);
-        for(Statement st : funcDef.getStatements()){
-            st.accept(this,p);
-        }
+        super.visit(funcDef,p);
         return null;
     }
 
     @Override
     public TR visit(VarDefinition varDef, TP p) {
-        varDef.getType().accept(this,p);
+        super.visit(varDef,p);
         return null;
     }
 
     @Override
     public TR visit(Arithmetic arithmetic, TP p) {
-        arithmetic.getLeft().accept(this,p);
-        arithmetic.getRight().accept(this,p);
+        arithmetic.setLValue(false);
+        super.visit(arithmetic,p);
         return null;
     }
 
     @Override
     public TR visit(Boolean bool, TP p) {
-        bool.getLeft().accept(this,p);
-        bool.getRight().accept(this,p);
+        bool.setLValue(false);
+        super.visit(bool,p);
         return null;
     }
 
     @Override
     public TR visit(Cast cast, TP p) {
-        cast.getType().accept(this,p);
-        cast.getExpression().accept(this,p);
+        cast.setLValue(false);
+        super.visit(cast, p);
         return null;
     }
 
     @Override
     public TR visit(CharLiteral lit, TP p) {
+        lit.setLValue(false);
+        super.visit(lit,p);
         return null;
     }
 
     @Override
     public TR visit(Comparison comp, TP p) {
-        comp.getLeft().accept(this,p);
-        comp.getRight().accept(this,p);
+        comp.setLValue(false);
+        super.visit(comp,p);
         return null;
     }
 
     @Override
     public TR visit(DoubleLiteral lit, TP p) {
+        lit.setLValue(false);
+        super.visit(lit,p);
         return null;
     }
 
     @Override
     public TR visit(IntLiteral lit, TP p) {
+        lit.setLValue(false);
+        super.visit(lit,p);
         return null;
     }
 
     @Override
     public TR visit(Not not, TP p) {
-        not.getExpression().accept(this,p);
+        not.setLValue(false);
+        super.visit(not,p);
         return null;
     }
 
     @Override
     public TR visit(Point point, TP p) {
-        point.getExpression().accept(this,p);
+        point.setLValue(true);
+        super.visit(point,p);
         return null;
     }
 
     @Override
     public TR visit(SquareBrackets sB, TP p) {
-        sB.getLeft().accept(this,p);
-        sB.getRight().accept(this,p);
+        sB.setLValue(true);
+        super.visit(sB,p);
         return null;
     }
 
     @Override
     public TR visit(UnaryMinus minus, TP p) {
-        minus.getExpression().accept(this,p);
+        minus.setLValue(false);
+        super.visit(minus,p);
         return null;
     }
 
     @Override
     public TR visit(Variable var, TP p) {
+        var.setLValue(true);
+        super.visit(var,p);
         return null;
     }
 
     @Override
     public TR visit(Assignment assignment, TP p) {
-        assignment.getLeft().accept(this,p);
-        assignment.getRight().accept(this,p);
+        super.visit(assignment,p);
+    if(!assignment.getLeft().getLValue()){
+        new ErrorType(assignment.getLine(),assignment.getColumn(),"Error: Not LValue");
+    }
         return null;
     }
 
     @Override
     public TR visit(Function function, TP p) {
-        for(Expression exp: function.getExpressions()){
-            exp.accept(this,p);
-        }
+        super.visit(function,p);
         return null;
     }
 
     @Override
     public TR visit(IfElse ifElse, TP p) {
-        ifElse.getExpression().accept(this,p);
-        for(Statement st : ifElse.getIfStatements()){
-            st.accept(this,p);
-        }
-        for(Statement st : ifElse.getElseStatements()){
-            st.accept(this,p);
-        }
+        super.visit(ifElse,p);
         return null;
     }
 
     @Override
     public TR visit(Input input, TP p) {
+        super.visit(input,p);
         for(Expression exp: input.getExpressions()){
-            exp.accept(this,p);
+            if(!exp.getLValue()){
+                new ErrorType(exp.getLine(),exp.getColumn(),"Error: Not LValue");
+            }
         }
         return null;
     }
 
     @Override
     public TR visit(Print print, TP p) {
-        for(Expression exp: print.getExpressions()){
-            exp.accept(this,p);
-        }
+        super.visit(print,p);
         return null;
     }
 
     @Override
     public TR visit(Return ret, TP p) {
-        ret.getExpression().accept(this,p);
+        super.visit(ret,p);
         return null;
     }
 
     @Override
     public TR visit(While whil, TP p) {
-        whil.getExpression().accept(this,p);
-        for(Statement st : whil.getStatements()){
-            st.accept(this,p);
-        }
+        super.visit(whil,p);
         return null;
     }
 
     @Override
     public TR visit(Array arr, TP p) {
-        arr.getArrayType().accept(this,p);
+        super.visit(arr,p);
         return null;
     }
 
     @Override
     public TR visit(Character character, TP p) {
+        super.visit(character,p);
         return null;
     }
 
     @Override
     public TR visit(Double doub, TP p) {
+        super.visit(doub,p);
         return null;
     }
 
     @Override
     public TR visit(ErrorType err, TP p) {
+        super.visit(err,p);
         return null;
     }
 
     @Override
     public TR visit(FunctionType funcType, TP p) {
-        funcType.getReturnType().accept(this,p);
-        for(VarDefinition varDef: funcType.getDefs()){
-            varDef.accept(this,p);
-        }
+        super.visit(funcType,p);
         return null;
     }
 
     @Override
     public TR visit(Integer integer, TP p) {
+        super.visit(integer,p);
         return null;
     }
 
     @Override
     public TR visit(RecordField recordField, TP p) {
-        recordField.accept(this,p);
+        super.visit(recordField,p);
         return null;
     }
 
     @Override
     public TR visit(Struct struct, TP p) {
-        for(RecordField rf : struct.getRecords()){
-            rf.accept(this,p);
-        }
+        super.visit(struct,p);
         return null;
     }
 
     @Override
     public TR visit(VoidType voidType, TP p) {
+        super.visit(voidType,p);
         return null;
     }
 }
