@@ -3,6 +3,7 @@ package ast.statement;
 import ast.BaseNode;
 import ast.Expression;
 import ast.Statement;
+import ast.visitor.Visitor;
 
 public class Assignment extends BaseNode implements Statement {
 
@@ -34,5 +35,10 @@ public class Assignment extends BaseNode implements Statement {
     @Override
     public String toString() {
         return "Assignment at line: " + getLine() + "Column: " + getColumn() + ". Left: " + left.toString() + ". Right:" + right.toString() + '}';
+    }
+
+    @Override
+    public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
+        return v.visit(this,p);
     }
 }

@@ -4,6 +4,7 @@ import ast.BaseNode;
 import ast.Expression;
 import ast.Statement;
 import ast.expression.Variable;
+import ast.visitor.Visitor;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class Function extends BaseNode implements Statement, Expression {
 
     private List<Expression> expressions;
     private String name;
+    private Boolean LValue;
 
     public Function(int line, int column,String name, List<Expression> expressions) {
         super(line, column);
@@ -37,5 +39,20 @@ public class Function extends BaseNode implements Statement, Expression {
     @Override
     public String toString() {
         return "Function at line: " + getLine() + "Column: " + getColumn() + ". Name: " + name + ". Expressions: " + expressions.toString();
+    }
+
+    @Override
+    public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
+        return v.visit(this,p);
+    }
+
+    @Override
+    public boolean getLValue() {
+        return LValue;
+    }
+
+    @Override
+    public void setLValue(boolean lValue) {
+        this.LValue = true;
     }
 }

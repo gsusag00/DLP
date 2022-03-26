@@ -3,6 +3,7 @@ package ast.statement;
 import ast.BaseNode;
 import ast.Expression;
 import ast.Statement;
+import ast.visitor.Visitor;
 
 import java.util.List;
 
@@ -47,5 +48,10 @@ public class IfElse extends BaseNode implements Statement {
     @Override
     public String toString() {
         return "If Else at line: " + getLine() + "Column: " + getColumn() + "If Statements: " + ifStatements.toString() + ". Else Statements: " + elseStatements.toString() + ". Expressions: " + expression.toString();
+    }
+
+    @Override
+    public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
+        return v.visit(this,p);
     }
 }

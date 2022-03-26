@@ -11,39 +11,39 @@ import ast.type.Character;
 import ast.type.Double;
 import ast.type.Integer;
 
-public interface Visitor<TP,TR> {
+public interface Visitor<TR, TP> {
 
-    TP visit(Program program, TR p);
-    TP visit(FuncDefinition funcDef, TR p);
-    TP visit(VarDefinition varDef, TR p);
-    TP visit(Arithmetic arithmetic, TR p);
-    TP visit(Boolean bool, TR p);
-    TP visit(Cast cast, TR p);
-    TP visit(CharLiteral lit, TR p);
-    TP visit(Comparison comp, TR p);
-    TP visit(DoubleLiteral lit, TR p);
-    TP visit(IntLiteral lit, TR p);
-    TP visit(Not not, TR p);
-    TP visit(Point point, TR p);
-    TP visit(SquareBrackets sB, TR p);
-    TP visit(UnaryMinus minus, TR p);
-    TP visit(Variable var, TR p);
-    TP visit(Assignment assignment, TR p);
-    TP visit(Function function, TR p);
-    TP visit(IfElse ifElse, TR p);
-    TP visit(Input input, TR p);
-    TP visit(Print print, TR p);
-    TP visit(Return ret, TR p);
-    TP visit(While whil, TR p);
-    TP visit(Array arr, TR p);
-    TP visit(Character character, TR p);
-    TP visit(Double doub, TR p);
-    TP visit(ErrorType err, TR p);
-    TP visit(FunctionType funcType, TR p);
-    TP visit(Integer integer, TR p);
-    TP visit(RecordField recordField, TR p);
-    TP visit(Struct struct, TR p);
-    TP visit(VoidType voidType, TR p);
+    TR visit(Program program,TP p);
+    TR visit(FuncDefinition funcDef,TP p);
+    TR visit(VarDefinition varDef,TP p);
+    TR visit(Arithmetic arithmetic,TP p);
+    TR visit(Boolean bool,TP p);
+    TR visit(Cast cast,TP p);
+    TR visit(CharLiteral lit,TP p);
+    TR visit(Comparison comp, TP p);
+    TR visit(DoubleLiteral lit,TP p);
+    TR visit(IntLiteral lit,TP p);
+    TR visit(Not not,TP p);
+    TR visit(Point point,TP p);
+    TR visit(SquareBrackets sB,TP p);
+    TR visit(UnaryMinus minus,TP p);
+    TR visit(Variable var,TP p);
+    TR visit(Assignment assignment,TP p);
+    TR visit(Function function,TP p);
+    TR visit(IfElse ifElse,TP p);
+    TR visit(Input input, TP p);
+    TR visit(Print print,TP p);
+    TR visit(Return ret,TP p);
+    TR visit(While whil,TP p);
+    TR visit(Array arr,TP p);
+    TR visit(Character character,TP p);
+    TR visit(Double doub,TP p);
+    TR visit(ErrorType err,TP p);
+    TR visit(FunctionType funcType,TP p);
+    TR visit(Integer integer,TP p);
+    TR visit(RecordField recordField,TP p);
+    TR visit(Struct struct,TP p);
+    TR visit(VoidType voidType,TP p);
 
 
 }

@@ -2,10 +2,10 @@ package ast;
 
 import ast.visitor.Visitor;
 
-public interface ASTNode<TR,TP>{
+public interface ASTNode{
 
     int getLine();
     int getColumn();
-    TR accept(Visitor v, TP p);
+    <TR,TP> TR accept(Visitor<TR,TP> v, TP p);
 
 }

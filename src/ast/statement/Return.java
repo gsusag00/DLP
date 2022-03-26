@@ -3,6 +3,7 @@ package ast.statement;
 import ast.BaseNode;
 import ast.Expression;
 import ast.Statement;
+import ast.visitor.Visitor;
 
 public class Return extends BaseNode implements Statement {
 
@@ -25,4 +26,10 @@ public class Return extends BaseNode implements Statement {
     public String toString() {
         return "Return at line: " + getLine() + "Column: " + getColumn() + ". Expression: " + expression.toString();
     }
+
+    @Override
+    public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
+        return v.visit(this,p);
+    }
+
 }

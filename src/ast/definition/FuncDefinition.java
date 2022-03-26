@@ -8,7 +8,7 @@ import ast.expression.Variable;
 import ast.visitor.Visitor;
 import java.util.List;
 
-public class FuncDefinition<TR,TP> extends BaseNode<TP,TR> implements Definition {
+public class FuncDefinition extends BaseNode implements Definition {
 
     private List<Statement> statements;
     private List<VarDefinition> varDefinitions;
@@ -63,7 +63,7 @@ public class FuncDefinition<TR,TP> extends BaseNode<TP,TR> implements Definition
     }
 
     @Override
-    public TP accept(Visitor v, TR p) {
-        return null;
+    public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
+        return v.visit(this,p);
     }
 }

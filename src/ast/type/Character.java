@@ -16,7 +16,7 @@ public class Character extends BaseNode implements Type {
     }
 
     @Override
-    public Object accept(Visitor v, Object p) {
+    public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
     }
 }

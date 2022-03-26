@@ -24,10 +24,6 @@ public class Arithmetic extends BaseNode implements Expression {
     }
 
 
-    @Override
-    public Object accept(Visitor v, Object p) {
-        return v.visit(this,p);
-    }
 
     @Override
     public boolean getLValue() {
@@ -37,5 +33,11 @@ public class Arithmetic extends BaseNode implements Expression {
     @Override
     public void setLValue(boolean lValue) {
         this.lValue = lValue;
+    }
+
+
+    @Override
+    public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
+        return v.visit(this,p);
     }
 }

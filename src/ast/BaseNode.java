@@ -2,7 +2,7 @@ package ast;
 
 import ast.visitor.Visitor;
 
-public abstract class BaseNode<TP,TR> implements ASTNode<TP,TR>{
+public abstract class BaseNode implements ASTNode{
 
     private int line;
     private int column;
@@ -22,6 +22,5 @@ public abstract class BaseNode<TP,TR> implements ASTNode<TP,TR>{
         return column;
     }
 
-    @Override
-    public abstract TP accept(Visitor v, TR p);
+
 }

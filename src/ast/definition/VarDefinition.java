@@ -54,7 +54,7 @@ public class VarDefinition  extends BaseNode implements Definition{
     }
 
     @Override
-    public Object accept(Visitor v, Object p) {
-        return null;
+    public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
+        return v.visit(this,p);
     }
 }
