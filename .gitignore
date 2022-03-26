@@ -1,1 +1,10 @@
 /out/**
+/out/production/**
+/out/production/DLP/**
+/out/production/DLP/ast/**
+/out/production/DLP/ast/definition/**
+/out/production/DLP/ast/expression/**
+/out/production/DLP/ast/type/**
+/out/production/DLP/ast/statement/**
+/out/production/DLP/ast/errorHandler/**
+/out/production/DLP/parser/**
