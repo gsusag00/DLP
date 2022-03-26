@@ -1,40 +1,19 @@
 package ast.expression;
 
-import ast.BaseNode;
 import ast.Expression;
 import ast.visitor.Visitor;
 
 
-public class Arithmetic extends BaseNode implements Expression {
-
-    private Expression left, right;
-    private String operator;
-    private boolean lValue;
+public class Arithmetic extends AbstractOperation implements Expression {
 
     public Arithmetic(int line, int column, Expression left, Expression right, String operator) {
-        super(line,column);
-        this.left = left;
-        this.right = right;
-        this.operator = operator;
+        super(line,column,left,right,operator);
     }
 
     @Override
     public String toString() {
-        return "Arithmetic at line: " + getLine() + "Column: " + getColumn() + ". Operator: " + operator + ". Left:" + left.toString() + ". Right: " + right.toString();
+        return "Arithmetic at line: " + getLine() + "Column: " + getColumn() + ". Operator: " + getOperator() + ". Left:" + getLeft().toString() + ". Right: " + getRight().toString();
     }
-
-
-
-    @Override
-    public boolean getLValue() {
-        return lValue;
-    }
-
-    @Override
-    public void setLValue(boolean lValue) {
-        this.lValue = lValue;
-    }
-
 
     @Override
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {

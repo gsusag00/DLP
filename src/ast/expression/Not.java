@@ -4,14 +4,17 @@ import ast.BaseNode;
 import ast.Expression;
 import ast.visitor.Visitor;
 
-public class Not extends BaseNode implements Expression {
+public class Not extends AbstractExpression implements Expression {
 
     private Expression expression;
-    private boolean lValue;
 
     public Not(Expression expression, int line, int column) {
         super(line, column);
         this.expression = expression;
+    }
+
+    public Expression getExpression() {
+        return expression;
     }
 
     @Override
@@ -22,15 +25,5 @@ public class Not extends BaseNode implements Expression {
     @Override
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
-    }
-
-    @Override
-    public boolean getLValue() {
-        return lValue;
-    }
-
-    @Override
-    public void setLValue(boolean lValue) {
-        this.lValue = lValue;
     }
 }

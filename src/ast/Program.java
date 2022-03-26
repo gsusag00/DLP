@@ -1,5 +1,7 @@
 package ast;
 
+import ast.visitor.Visitor;
+
 import java.util.List;
 
 public class Program extends BaseNode {
@@ -22,5 +24,10 @@ public class Program extends BaseNode {
     @Override
     public String toString() {
         return "Program at line: " + getLine() + "Column: " + getColumn() + ". Definiciones: " + definiciones.toString();
+    }
+
+    @Override
+    public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
+        return v.visit(this,p);
     }
 }

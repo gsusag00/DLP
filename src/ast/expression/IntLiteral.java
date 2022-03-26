@@ -4,10 +4,9 @@ import ast.BaseNode;
 import ast.Expression;
 import ast.visitor.Visitor;
 
-public class IntLiteral extends BaseNode implements Expression {
+public class IntLiteral extends AbstractExpression implements Expression {
 
     private int value;
-    private boolean lValue;
 
     public IntLiteral(int value, int line, int column) {
         super(line, column);
@@ -24,13 +23,5 @@ public class IntLiteral extends BaseNode implements Expression {
         return v.visit(this,p);
     }
 
-    @Override
-    public boolean getLValue() {
-        return lValue;
-    }
 
-    @Override
-    public void setLValue(boolean lValue) {
-        this.lValue = lValue;
-    }
 }

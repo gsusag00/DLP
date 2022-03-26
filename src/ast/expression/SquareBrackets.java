@@ -4,16 +4,23 @@ import ast.BaseNode;
 import ast.Expression;
 import ast.visitor.Visitor;
 
-public class SquareBrackets extends BaseNode implements Expression {
+public class SquareBrackets extends AbstractExpression implements Expression {
 
     private Expression left;
     private Expression right;
-    private boolean lValue;
 
     public SquareBrackets(Expression left, Expression right,int line, int column) {
         super(line, column);
         this.left=left;
         this.right=right;
+    }
+
+    public Expression getLeft() {
+        return left;
+    }
+
+    public Expression getRight() {
+        return right;
     }
 
     @Override
@@ -26,13 +33,5 @@ public class SquareBrackets extends BaseNode implements Expression {
         return v.visit(this,p);
     }
 
-    @Override
-    public boolean getLValue() {
-        return lValue;
-    }
 
-    @Override
-    public void setLValue(boolean lValue) {
-        this.lValue = lValue;
-    }
 }

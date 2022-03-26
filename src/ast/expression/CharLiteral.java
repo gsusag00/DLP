@@ -4,10 +4,9 @@ import ast.BaseNode;
 import ast.Expression;
 import ast.visitor.Visitor;
 
-public class CharLiteral extends BaseNode implements Expression {
+public class CharLiteral extends AbstractExpression implements Expression {
 
     private char value;
-    private boolean lValue;
 
     public CharLiteral(char value, int line, int column) {
         super(line, column);
@@ -30,15 +29,5 @@ public class CharLiteral extends BaseNode implements Expression {
     @Override
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
-    }
-
-    @Override
-    public boolean getLValue() {
-        return lValue;
-    }
-
-    @Override
-    public void setLValue(boolean lValue) {
-        this.lValue = lValue;
     }
 }
