@@ -26,8 +26,10 @@ public class SymbolTable {
 	
 	public boolean insert(Definition definition) {
 		Map<String,Definition> map = table.get(table.size() - 1);
-		if(map.get(definition.getName()) != null){
+		if(map.get(definition.getName()) == null){
 			table.get(table.size() - 1).put(definition.getName(), definition);
+			definition.setScope(scope);
+			return true;
 		}
 		return false;
 	}

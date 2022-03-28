@@ -6,164 +6,200 @@ import ast.definition.VarDefinition;
 import ast.expression.*;
 import ast.expression.Boolean;
 import ast.statement.*;
+import ast.symboltable.SymbolTable;
 import ast.type.*;
 import ast.type.Character;
 import ast.type.Double;
 import ast.type.Integer;
 
-public class IdentificationVisitor extends AbstractVisitor{
+public class IdentificationVisitor<TR,TP> extends AbstractVisitor<TR,TP>{
+
+    public SymbolTable st = new SymbolTable();
+
     @Override
-    public Object visit(Program program, Object p) {
+    public TR visit(Program program, TP p) {
+        super.visit(program, p);
         return null;
     }
 
     @Override
-    public Object visit(FuncDefinition funcDef, Object p) {
+    public TR visit(FuncDefinition funcDef, TP p) {
+        super.visit(funcDef, p);
+
         return null;
     }
 
     @Override
-    public Object visit(VarDefinition varDef, Object p) {
+    public TR visit(VarDefinition varDef, TP p) {
+        super.visit(varDef, p);
         return null;
     }
 
     @Override
-    public Object visit(Arithmetic arithmetic, Object p) {
+    public TR visit(Arithmetic arithmetic, TP p) {
+        super.visit(arithmetic, p);
         return null;
     }
 
     @Override
-    public Object visit(Boolean bool, Object p) {
+    public TR visit(Boolean bool, TP p) {
+        super.visit(bool, p);
         return null;
     }
 
     @Override
-    public Object visit(Cast cast, Object p) {
+    public TR visit(Cast cast, TP p) {
+        super.visit(cast, p);
         return null;
     }
 
     @Override
-    public Object visit(CharLiteral lit, Object p) {
+    public TR visit(CharLiteral lit, TP p) {
+        super.visit(lit, p);
         return null;
     }
 
     @Override
-    public Object visit(Comparison comp, Object p) {
+    public TR visit(Comparison comp, TP p) {
+        super.visit(comp, p);
         return null;
     }
 
     @Override
-    public Object visit(DoubleLiteral lit, Object p) {
+    public TR visit(DoubleLiteral lit, TP p) {
+        super.visit(lit, p);
         return null;
     }
 
     @Override
-    public Object visit(IntLiteral lit, Object p) {
+    public TR visit(IntLiteral lit, TP p) {
+        super.visit(lit, p);
         return null;
     }
 
     @Override
-    public Object visit(Not not, Object p) {
+    public TR visit(Not not, TP p) {
+        super.visit(not, p);
         return null;
     }
 
     @Override
-    public Object visit(Point point, Object p) {
+    public TR visit(Point point, TP p) {
+        super.visit(point, p);
         return null;
     }
 
     @Override
-    public Object visit(SquareBrackets sB, Object p) {
+    public TR visit(SquareBrackets sB, TP p) {
+        super.visit(sB, p);
         return null;
     }
 
     @Override
-    public Object visit(UnaryMinus minus, Object p) {
+    public TR visit(UnaryMinus minus, TP p) {
+        super.visit(minus, p);
         return null;
     }
 
     @Override
-    public Object visit(Variable var, Object p) {
+    public TR visit(Variable var, TP p) {
+        super.visit(var, p);
         return null;
     }
 
     @Override
-    public Object visit(Assignment assignment, Object p) {
+    public TR visit(Assignment assignment, TP p) {
+        super.visit(assignment, p);
         return null;
     }
 
     @Override
-    public Object visit(Function function, Object p) {
+    public TR visit(Function function, TP p) {
+        super.visit(function, p);
         return null;
     }
 
     @Override
-    public Object visit(IfElse ifElse, Object p) {
+    public TR visit(IfElse ifElse, TP p) {
+        super.visit(ifElse, p);
         return null;
     }
 
     @Override
-    public Object visit(Input input, Object p) {
+    public TR visit(Input input, TP p) {
+        super.visit(input, p);
         return null;
     }
 
     @Override
-    public Object visit(Print print, Object p) {
+    public TR visit(Print print, TP p) {
+        super.visit(print, p);
         return null;
     }
 
     @Override
-    public Object visit(Return ret, Object p) {
+    public TR visit(Return ret, TP p) {
+        super.visit(ret, p);
         return null;
     }
 
     @Override
-    public Object visit(While whil, Object p) {
+    public TR visit(While whil, TP p) {
+        super.visit(whil, p);
         return null;
     }
 
     @Override
-    public Object visit(Array arr, Object p) {
+    public TR visit(Array arr, TP p) {
+        super.visit(arr, p);
         return null;
     }
 
     @Override
-    public Object visit(Character character, Object p) {
+    public TR visit(Character character, TP p) {
+        super.visit(character, p);
         return null;
     }
 
     @Override
-    public Object visit(Double doub, Object p) {
+    public TR visit(Double doub, TP p) {
+        super.visit(doub, p);
         return null;
     }
 
     @Override
-    public Object visit(ErrorType err, Object p) {
+    public TR visit(ErrorType err, TP p) {
+        super.visit(err, p);
         return null;
     }
 
     @Override
-    public Object visit(FunctionType funcType, Object p) {
+    public TR visit(FunctionType funcType, TP p) {
+        super.visit(funcType, p);
         return null;
     }
 
     @Override
-    public Object visit(Integer integer, Object p) {
+    public TR visit(Integer integer, TP p) {
+        super.visit(integer, p);
         return null;
     }
 
     @Override
-    public Object visit(RecordField recordField, Object p) {
+    public TR visit(RecordField recordField, TP p) {
+        super.visit(recordField, p);
         return null;
     }
 
     @Override
-    public Object visit(Struct struct, Object p) {
+    public TR visit(Struct struct, TP p) {
+        super.visit(struct, p);
         return null;
     }
 
     @Override
-    public Object visit(VoidType voidType, Object p) {
+    public TR visit(VoidType voidType, TP p) {
+        super.visit(voidType, p);
         return null;
     }
 }
