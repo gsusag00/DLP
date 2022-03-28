@@ -14,7 +14,7 @@ import ast.type.Integer;
 
 public class IdentificationVisitor<TR,TP> extends AbstractVisitor<TR,TP>{
 
-    public SymbolTable st = new SymbolTable();
+    public SymbolTable table = new SymbolTable();
 
     @Override
     public TR visit(Program program, TP p) {
@@ -25,6 +25,10 @@ public class IdentificationVisitor<TR,TP> extends AbstractVisitor<TR,TP>{
     @Override
     public TR visit(FuncDefinition funcDef, TP p) {
         super.visit(funcDef, p);
+        if(!table.insert(funcDef)){
+            new ErrorType(funcDef.getLine(),funcDef.getColumn(),"Error: Variable duplicada en ambito");
+        }
+
 
         return null;
     }
@@ -32,6 +36,9 @@ public class IdentificationVisitor<TR,TP> extends AbstractVisitor<TR,TP>{
     @Override
     public TR visit(VarDefinition varDef, TP p) {
         super.visit(varDef, p);
+        if(!table.insert(varDef)){
+            new ErrorType(varDef.getLine(),varDef.getColumn(),"Error: Variable duplicada en ambito");
+        }
         return null;
     }
 
@@ -175,6 +182,11 @@ public class IdentificationVisitor<TR,TP> extends AbstractVisitor<TR,TP>{
 
     @Override
     public TR visit(FunctionType funcType, TP p) {
+        for(VarDefinition varDef : funcType.getDefs()){
+            if(!table.insert(varDef)){
+                new ErrorType(varDef.getLine(),varDef.getColumn(),"Error: Variable duplicada en ambito");
+            }
+        }
         super.visit(funcType, p);
         return null;
     }
