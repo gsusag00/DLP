@@ -9,13 +9,18 @@ import ast.visitor.Visitor;
 
 import java.util.List;
 
-public class VarDefinition  extends BaseNode implements Definition{
+public class VarDefinition  extends AbstractDefinition implements Definition{
 
     private String name;
     private Type type;
 
     public VarDefinition(int line, int column, String name) {
-        super(line, column);
+        super(line, column,name);
+        this.name = name;
+    }
+
+    public VarDefinition(int line, int column, String name,Object test) {
+        super(line, column,name);
         this.name = name;
     }
 

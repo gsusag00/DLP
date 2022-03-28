@@ -1,12 +1,14 @@
 package ast.expression;
 
 import ast.BaseNode;
+import ast.Definition;
 import ast.Expression;
 import ast.visitor.Visitor;
 
 public class Variable extends AbstractExpression implements Expression {
 
     private String name;
+    private Definition def;
 
     public Variable(String name, int line, int column) {
         super(line, column);
@@ -27,5 +29,11 @@ public class Variable extends AbstractExpression implements Expression {
         return v.visit(this,p);
     }
 
+    public Definition getDef() {
+        return def;
+    }
 
+    public void setDef(Definition def) {
+        this.def = def;
+    }
 }
