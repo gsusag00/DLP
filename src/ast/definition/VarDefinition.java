@@ -38,10 +38,10 @@ public class VarDefinition  extends AbstractDefinition implements Definition{
         return type;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Var Definition at line: " + getLine() + "Column: " + getColumn() + "Name: " + name + ". Type: " + type.toString();
-//    }
+    @Override
+    public String toString() {
+        return "Var Definition at line: " + getLine() + "Column: " + getColumn() + "Name: " + name + ". Type: " + type.toString();
+    }
 
     @Override
     public boolean equals(Object o) {

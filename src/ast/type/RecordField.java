@@ -33,7 +33,7 @@ public class RecordField extends BaseNode implements Type {
         return name.hashCode();
     }
 
-    private Type getType() {
+    public Type getType() {
         return type;
     }
 

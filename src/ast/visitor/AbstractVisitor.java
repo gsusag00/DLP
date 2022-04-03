@@ -27,6 +27,9 @@ public abstract class AbstractVisitor<TR,TP> implements Visitor<TR,TP>{
     @Override
     public TR visit(FuncDefinition funcDef, TP p) {
         funcDef.getType().accept(this,p);
+        for(VarDefinition varDef : funcDef.getVarDefinitions()){
+            varDef.accept(this,p);
+        }
         for(Statement st : funcDef.getStatements()){
             st.accept(this,p);
         }
@@ -207,7 +210,7 @@ public abstract class AbstractVisitor<TR,TP> implements Visitor<TR,TP>{
 
     @Override
     public TR visit(RecordField recordField, TP p) {
-        recordField.accept(this,p);
+        recordField.getType().accept(this,p);
         return null;
     }
 

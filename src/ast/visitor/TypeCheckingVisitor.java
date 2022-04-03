@@ -1,36 +1,13 @@
 package ast.visitor;
 
 import ast.Expression;
-import ast.Program;
-import ast.definition.FuncDefinition;
-import ast.definition.VarDefinition;
-import ast.expression.*;
 import ast.expression.Boolean;
-import ast.statement.*;
-import ast.type.*;
-import ast.type.Character;
-import ast.type.Double;
-import ast.type.Integer;
+import ast.expression.*;
+import ast.statement.Assignment;
+import ast.statement.Input;
+import ast.type.ErrorType;
 
 public class TypeCheckingVisitor<TR,TP> extends AbstractVisitor<TR,TP> {
-
-    @Override
-    public TR visit(Program program, TP p) {
-        super.visit(program,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(FuncDefinition funcDef, TP p) {
-        super.visit(funcDef,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(VarDefinition varDef, TP p) {
-        super.visit(varDef,p);
-        return null;
-    }
 
     @Override
     public TR visit(Arithmetic arithmetic, TP p) {
@@ -119,21 +96,9 @@ public class TypeCheckingVisitor<TR,TP> extends AbstractVisitor<TR,TP> {
     @Override
     public TR visit(Assignment assignment, TP p) {
         super.visit(assignment,p);
-    if(!assignment.getLeft().getLValue()){
-        new ErrorType(assignment.getLine(),assignment.getColumn(),"Error: Not LValue");
-    }
-        return null;
-    }
-
-    @Override
-    public TR visit(Function function, TP p) {
-        super.visit(function,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(IfElse ifElse, TP p) {
-        super.visit(ifElse,p);
+        if(!assignment.getLeft().getLValue()){
+            new ErrorType(assignment.getLine(),assignment.getColumn(),"Error: Not LValue");
+        }
         return null;
     }
 
@@ -145,78 +110,6 @@ public class TypeCheckingVisitor<TR,TP> extends AbstractVisitor<TR,TP> {
                 new ErrorType(exp.getLine(),exp.getColumn(),"Error: Not LValue");
             }
         }
-        return null;
-    }
-
-    @Override
-    public TR visit(Print print, TP p) {
-        super.visit(print,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(Return ret, TP p) {
-        super.visit(ret,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(While whil, TP p) {
-        super.visit(whil,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(Array arr, TP p) {
-        super.visit(arr,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(Character character, TP p) {
-        super.visit(character,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(Double doub, TP p) {
-        super.visit(doub,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(ErrorType err, TP p) {
-        super.visit(err,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(FunctionType funcType, TP p) {
-        super.visit(funcType,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(Integer integer, TP p) {
-        super.visit(integer,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(RecordField recordField, TP p) {
-        super.visit(recordField,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(Struct struct, TP p) {
-        super.visit(struct,p);
-        return null;
-    }
-
-    @Override
-    public TR visit(VoidType voidType, TP p) {
-        super.visit(voidType,p);
         return null;
     }
 }

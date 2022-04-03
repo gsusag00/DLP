@@ -30,7 +30,7 @@ mainFunc returns [FuncDefinition ast] locals [List<VarDefinition> varDecs = new 
     );};
 
 funcDef returns [FuncDefinition ast] locals [List<VarDefinition> varDecs = new ArrayList<VarDefinition>(),List<Statement> statements = new ArrayList<Statement>(), Type ret = new VoidType()]:
-     DEF='def' ID '(' funcVarList ')' ':' (type{$ret=$type.ast;})? '{'(varDef {$varDecs.addAll($varDef.ast);})* (statement {$statements.add($statement.ast);})*'}' {$ast = new FuncDefinition(
+     DEF='def' ID ('(' funcVarList ')' ':'|'():') (type{$ret=$type.ast;})? '{'(varDef {$varDecs.addAll($varDef.ast);})* (statement {$statements.add($statement.ast);})*'}' {$ast = new FuncDefinition(
         $ID.text,
         $DEF.getLine(),
         $DEF.getCharPositionInLine() + 1,
