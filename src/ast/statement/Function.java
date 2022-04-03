@@ -12,11 +12,11 @@ import java.util.List;
 public class Function extends AbstractExpression implements Statement, Expression {
 
     private List<Expression> expressions;
-    private String name;
+    private Variable variable;
 
-    public Function(int line, int column,String name, List<Expression> expressions) {
+    public Function(int line, int column,Variable variable, List<Expression> expressions) {
         super(line, column);
-        this.name = name;
+        this.variable = variable;
         this.expressions = expressions;
     }
 
@@ -28,17 +28,17 @@ public class Function extends AbstractExpression implements Statement, Expressio
         this.expressions = expressions;
     }
 
-    public String getName() {
-        return name;
+    public Variable getVariable() {
+        return variable;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setVariable(Variable variable) {
+        this.variable = variable;
     }
 
     @Override
     public String toString() {
-        return "Function at line: " + getLine() + "Column: " + getColumn() + ". Name: " + name + ". Expressions: " + expressions.toString();
+        return "Function at line: " + getLine() + "Column: " + getColumn() + ". Name: " + variable.getName() + ". Expressions: " + expressions.toString();
     }
 
     @Override

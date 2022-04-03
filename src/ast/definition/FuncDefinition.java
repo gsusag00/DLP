@@ -1,11 +1,10 @@
 package ast.definition;
 
-import ast.BaseNode;
 import ast.Definition;
 import ast.Statement;
 import ast.Type;
-import ast.expression.Variable;
 import ast.visitor.Visitor;
+
 import java.util.List;
 
 public class FuncDefinition extends AbstractDefinition implements Definition {

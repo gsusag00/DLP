@@ -120,7 +120,7 @@ statement returns [Statement ast] locals [List<Statement> elseBod = new ArrayLis
     | ID '(' (exp1=expression {$aux.add($exp1.ast);} (',' expN=expression {$aux.add($expN.ast);})*)? ')' ';' {$ast = new Function(
         $ID.getLine(),
         $ID.getCharPositionInLine() + 1,
-        $ID.text,
+        new Variable($ID.text, $ID.getLine(), $ID.getCharPositionInLine() + 1),
         $aux
     );}
     | RET='return' exp=expression ';' { $ast = new Return($RET.getLine(),$RET.getCharPositionInLine(),$exp.ast);}
@@ -133,7 +133,7 @@ expression returns [Expression ast] locals [List<Expression> args = new ArrayLis
     ID '(' (exp1=expression {$args.add($exp1.ast);} (',' expN=expression{$args.add($expN.ast);})*)? ')' { $ast = new Function(
         $ID.getLine(),
         $ID.getCharPositionInLine() + 1,
-        $ID.text,
+        new Variable($ID.text, $ID.getLine(), $ID.getCharPositionInLine() + 1),
         $args
     );}
     | '(' expression ')' { $ast = $expression.ast;}

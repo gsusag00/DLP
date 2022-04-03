@@ -1,5 +1,6 @@
 package ast.visitor;
 
+import ast.Definition;
 import ast.definition.FuncDefinition;
 import ast.definition.VarDefinition;
 import ast.expression.Variable;
@@ -37,10 +38,11 @@ public class IdentificationVisitor<TR,TP> extends AbstractVisitor<TR,TP>{
     @Override
     public TR visit(Variable var, TP p) {
         super.visit(var, p);
-        if(table.findInCurrentScope(var.getName()) == null){
-            if(table.find(var.getName()) == null){
-                new ErrorType(var.getLine(),var.getColumn(),"Error: Variable no definida");
-            }
+        Definition def = table.findInCurrentScope(var.getName()) == null? table.find(var.getName()) : table.findInCurrentScope(var.getName());
+        if(def == null){
+            new ErrorType(var.getLine(),var.getColumn(),"Error: Variable no definida");
+        } else {
+            var.setDef(def);
         }
         return null;
     }
@@ -48,8 +50,11 @@ public class IdentificationVisitor<TR,TP> extends AbstractVisitor<TR,TP>{
     @Override
     public TR visit(Function function, TP p) {
         super.visit(function, p);
-        if(table.find(function.getName()) == null){
+        Definition def = table.find(function.getVariable().getName());
+        if(def == null){
             new ErrorType(function.getLine(),function.getColumn(),"Error: Funcion no definida");
+        } else {
+            function.getVariable().setDef(def);
         }
         return null;
     }

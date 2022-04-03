@@ -1196,7 +1196,7 @@ public class PmmParser extends Parser {
 				((StatementContext)_localctx).ast =  new Function(
 				        ((StatementContext)_localctx).ID.getLine(),
 				        ((StatementContext)_localctx).ID.getCharPositionInLine() + 1,
-				        (((StatementContext)_localctx).ID!=null?((StatementContext)_localctx).ID.getText():null),
+				        new Variable((((StatementContext)_localctx).ID!=null?((StatementContext)_localctx).ID.getText():null), ((StatementContext)_localctx).ID.getLine(), ((StatementContext)_localctx).ID.getCharPositionInLine() + 1),
 				        _localctx.aux
 				    );
 				}
@@ -1411,7 +1411,7 @@ public class PmmParser extends Parser {
 				 ((ExpressionContext)_localctx).ast =  new Function(
 				        ((ExpressionContext)_localctx).ID.getLine(),
 				        ((ExpressionContext)_localctx).ID.getCharPositionInLine() + 1,
-				        (((ExpressionContext)_localctx).ID!=null?((ExpressionContext)_localctx).ID.getText():null),
+				        new Variable((((ExpressionContext)_localctx).ID!=null?((ExpressionContext)_localctx).ID.getText():null), ((ExpressionContext)_localctx).ID.getLine(), ((ExpressionContext)_localctx).ID.getCharPositionInLine() + 1),
 				        _localctx.args
 				    );
 				}
