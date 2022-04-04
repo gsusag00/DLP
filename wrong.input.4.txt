@@ -1,0 +1,20 @@
+
+i:int;
+
+def f(a:int):int {
+  a:double;						# Error 1 variable duplicada
+  return 34.5;					# Error 2 se esperaba un entero pero se devuelve un real
+}
+
+def g(b:int, b:double): {		# Error 3 variable duplicada
+  return 3;						# Error 4 se esperaba void pero devuelve entero
+}
+
+def g(): {						# Error 5 funcion duplicada
+}
+
+def main(): {
+  f();       					# Error 6 No existe funcion que no reciba parametros
+  f(3.2);    					# Error 7 se esperaba int pero se recibio real
+  i = g();     					# Error 8 devuelve void y se esperaba int
+}
