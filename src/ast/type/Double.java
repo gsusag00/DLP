@@ -4,10 +4,19 @@ import ast.BaseNode;
 import ast.Type;
 import ast.visitor.Visitor;
 
-public class Double extends BaseNode implements Type {
+public class Double extends AbstractType {
 
-    public Double(int line, int column) {
+    private static Double doub;
+
+    private Double(int line, int column) {
         super(line, column);
+    }
+
+    public static Double getInstance() {
+        if(doub == null) {
+            doub = new Double(0,0);
+        }
+        return doub;
     }
 
     @Override

@@ -4,10 +4,19 @@ import ast.BaseNode;
 import ast.Type;
 import ast.visitor.Visitor;
 
-public class Integer extends BaseNode implements Type {
+public class Integer extends AbstractType {
 
-    public Integer(int line, int column) {
+    private static Integer integer;
+
+    private Integer(int line, int column) {
         super(line, column);
+    }
+
+    public static Integer getInstance() {
+        if(integer == null) {
+            integer = new Integer(0,0);
+        }
+        return integer;
     }
 
     @Override

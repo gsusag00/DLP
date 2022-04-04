@@ -6,8 +6,17 @@ import ast.visitor.Visitor;
 
 public class Character extends BaseNode implements Type {
 
-    public Character(int line, int column) {
+    private static Character character;
+
+    private Character(int line, int column) {
         super(line, column);
+    }
+
+    public static Character getInstance() {
+        if(character == null) {
+            character = new Character(0,0);
+        }
+        return character;
     }
 
     @Override

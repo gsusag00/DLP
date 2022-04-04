@@ -4,18 +4,19 @@ import ast.BaseNode;
 import ast.Type;
 import ast.visitor.Visitor;
 
-public class VoidType implements Type {
+public class VoidType extends AbstractType {
 
-    public VoidType() {};
+    private static VoidType voidType;
 
-    @Override
-    public int getLine() {
-        return 0;
+    private VoidType(int line, int column) {
+        super(line, column);
     }
 
-    @Override
-    public int getColumn() {
-        return 0;
+    public static VoidType getInstance() {
+        if(voidType == null) {
+            voidType = new VoidType(0,0);
+        }
+        return voidType;
     }
 
     @Override

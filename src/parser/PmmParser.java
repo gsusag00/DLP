@@ -333,7 +333,7 @@ public class PmmParser extends Parser {
 			        (((MainFuncContext)_localctx).MAIN!=null?((MainFuncContext)_localctx).MAIN.getText():null),
 			        ((MainFuncContext)_localctx).DEF.getLine(),
 			        ((MainFuncContext)_localctx).DEF.getCharPositionInLine() + 1,
-			        new FunctionType(((MainFuncContext)_localctx).DEF.getLine(), ((MainFuncContext)_localctx).DEF.getCharPositionInLine() + 1, new ArrayList<VarDefinition>(), new VoidType()),
+			        new FunctionType(((MainFuncContext)_localctx).DEF.getLine(), ((MainFuncContext)_localctx).DEF.getCharPositionInLine() + 1, new ArrayList<VarDefinition>(), VoidType.getInstance()),
 			        _localctx.varDecs,
 			        _localctx.statements
 			    );
@@ -354,7 +354,7 @@ public class PmmParser extends Parser {
 		public FuncDefinition ast;
 		public List<VarDefinition> varDecs = new ArrayList<VarDefinition>();
 		public List<Statement> statements = new ArrayList<Statement>();
-		public Type ret = new VoidType();
+		public Type ret = VoidType.getInstance();
 		public Token DEF;
 		public Token ID;
 		public FuncVarListContext funcVarList;
@@ -737,9 +737,6 @@ public class PmmParser extends Parser {
 
 	public static class TypeContext extends ParserRuleContext {
 		public Type ast;
-		public Integer integer = new Integer(0,0);
-		public Character character = new Character(0,0);
-		public Double doub = new Double(0,0);
 		public List<RecordField> records = new ArrayList<RecordField>();
 		public Token DOUBLE;
 		public Token CHAR;
@@ -782,7 +779,7 @@ public class PmmParser extends Parser {
 				{
 				setState(141);
 				((TypeContext)_localctx).DOUBLE = match(T__10);
-				 ((TypeContext)_localctx).ast =  _localctx.doub;
+				 ((TypeContext)_localctx).ast =  Double.getInstance();
 				}
 				break;
 			case T__11:
@@ -790,7 +787,7 @@ public class PmmParser extends Parser {
 				{
 				setState(143);
 				((TypeContext)_localctx).CHAR = match(T__11);
-				 ((TypeContext)_localctx).ast =  _localctx.character;
+				 ((TypeContext)_localctx).ast =  Character.getInstance();
 				}
 				break;
 			case T__12:
@@ -798,7 +795,7 @@ public class PmmParser extends Parser {
 				{
 				setState(145);
 				((TypeContext)_localctx).INT = match(T__12);
-				 ((TypeContext)_localctx).ast =  _localctx.integer;
+				 ((TypeContext)_localctx).ast =  Integer.getInstance();
 				}
 				break;
 			case T__13:

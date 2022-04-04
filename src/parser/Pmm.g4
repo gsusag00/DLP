@@ -24,12 +24,12 @@ mainFunc returns [FuncDefinition ast] locals [List<VarDefinition> varDecs = new 
         $MAIN.text,
         $DEF.getLine(),
         $DEF.getCharPositionInLine() + 1,
-        new FunctionType($DEF.getLine(), $DEF.getCharPositionInLine() + 1, new ArrayList<VarDefinition>(), new VoidType()),
+        new FunctionType($DEF.getLine(), $DEF.getCharPositionInLine() + 1, new ArrayList<VarDefinition>(), VoidType.getInstance()),
         $varDecs,
         $statements
     );};
 
-funcDef returns [FuncDefinition ast] locals [List<VarDefinition> varDecs = new ArrayList<VarDefinition>(),List<Statement> statements = new ArrayList<Statement>(), Type ret = new VoidType()]:
+funcDef returns [FuncDefinition ast] locals [List<VarDefinition> varDecs = new ArrayList<VarDefinition>(),List<Statement> statements = new ArrayList<Statement>(), Type ret = VoidType.getInstance()]:
      DEF='def' ID ('(' funcVarList ')' ':'|'():') (type{$ret=$type.ast;})? '{'(varDef {$varDecs.addAll($varDef.ast);})* (statement {$statements.add($statement.ast);})*'}' {$ast = new FuncDefinition(
         $ID.text,
         $DEF.getLine(),
@@ -68,10 +68,10 @@ varDec returns [List<VarDefinition> ast = new ArrayList<VarDefinition>()]: ID1=I
         )
     );} (',' IDN=ID{$ast.add( new VarDefinition($IDN.getLine(),$IDN.getCharPositionInLine() + 1, $IDN.text));})* ':' type {for(VarDefinition var : $ast){var.setType($type.ast);}};
 
-type returns [Type ast] locals [Integer integer = new Integer(0,0),Character character = new Character(0,0),Double doub = new Double(0,0),List<RecordField> records = new ArrayList<RecordField>()]:
-    DOUBLE='double' { $ast = $doub;}
-    | CHAR='char' { $ast = $character;}
-    | INT='int' { $ast = $integer;}
+type returns [Type ast] locals [List<RecordField> records = new ArrayList<RecordField>()]:
+    DOUBLE='double' { $ast = Double.getInstance();}
+    | CHAR='char' { $ast = Character.getInstance();}
+    | INT='int' { $ast = Integer.getInstance();}
     | '[' INT_CONSTANT ']' tipo=type { $ast = new Array(
         $INT_CONSTANT.getLine(),
         $INT_CONSTANT.getCharPositionInLine() + 1,
