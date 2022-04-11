@@ -4,7 +4,7 @@ import ast.BaseNode;
 import ast.Type;
 import ast.visitor.Visitor;
 
-public class RecordField extends BaseNode implements Type {
+public class RecordField extends AbstractType {
 
     private String name;
     private Type type;

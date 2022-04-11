@@ -9,7 +9,7 @@ import ast.visitor.Visitor;
 
 import java.util.List;
 
-public class VarDefinition  extends AbstractDefinition implements Definition{
+public class VarDefinition  extends AbstractDefinition implements Statement{
 
     private String name;
     private Type type;
@@ -19,9 +19,10 @@ public class VarDefinition  extends AbstractDefinition implements Definition{
         this.name = name;
     }
 
-    public VarDefinition(int line, int column, String name,Object test) {
+    public VarDefinition(int line, int column, String name, Type type) {
         super(line, column,name);
         this.name = name;
+        this.type = type;
     }
 
     public void setType(Type type){

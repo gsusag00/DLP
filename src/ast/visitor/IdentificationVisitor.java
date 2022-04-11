@@ -1,6 +1,7 @@
 package ast.visitor;
 
 import ast.Definition;
+import ast.Expression;
 import ast.definition.FuncDefinition;
 import ast.definition.VarDefinition;
 import ast.expression.Variable;
@@ -49,23 +50,21 @@ public class IdentificationVisitor<TR,TP> extends AbstractVisitor<TR,TP>{
 
     @Override
     public TR visit(Function function, TP p) {
-        super.visit(function, p);
+        function.getVariable().accept(this,p);
         Definition def = table.find(function.getVariable().getName());
         if(def == null){
             new ErrorType(function.getLine(),function.getColumn(),"Error: Funcion no definida");
         } else {
             function.getVariable().setDef(def);
         }
+        for(Expression exp: function.getExpressions()){
+            exp.accept(this,p);
+        }
         return null;
     }
 
     @Override
     public TR visit(FunctionType funcType, TP p) {
-//        for(VarDefinition varDef : funcType.getDefs()){
-//            if(!table.insert(varDef)){
-//                new ErrorType(varDef.getLine(),varDef.getColumn(),"Error: Variable duplicada en ambito");
-//            }
-//        }
         super.visit(funcType, p);
         return null;
     }

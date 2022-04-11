@@ -1,13 +1,15 @@
 package ast.type;
 
+import ast.ASTNode;
 import ast.BaseNode;
+import ast.Expression;
 import ast.Type;
 import ast.definition.VarDefinition;
 import ast.visitor.Visitor;
 
 import java.util.List;
 
-public class FunctionType extends BaseNode implements Type {
+public class FunctionType extends AbstractType {
     private List<VarDefinition> defs;
     private Type returnType;
 
@@ -41,5 +43,18 @@ public class FunctionType extends BaseNode implements Type {
     @Override
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
+    }
+
+    @Override
+    public Type parenthesis(ASTNode node, List<Expression> expressions) {
+        if(expressions.size() != defs.size()) {
+            return new ErrorType(node.getLine(),node.getColumn(), "Numero de parametros equivocado");
+        }
+        for(int i = 0; i<expressions.size(); i++) {
+            if(expressions.get(i).getType().promotesTo(defs.get(i).getType(), node) instanceof ErrorType) {
+                return new ErrorType(node.getLine(),node.getColumn(), "El tipo del parametro no coincide con el esperado");
+            }
+        }
+        return new ErrorType(node.getLine(),node.getColumn(), "Uso erroneo de los parentesis");
     }
 }

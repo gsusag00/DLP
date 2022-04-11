@@ -1,8 +1,12 @@
 package ast.type;
 
+import ast.ASTNode;
 import ast.BaseNode;
+import ast.Expression;
 import ast.Type;
 import ast.visitor.Visitor;
+
+import java.util.List;
 
 public class Double extends AbstractType {
 
@@ -25,7 +29,65 @@ public class Double extends AbstractType {
     }
 
     @Override
+    public int getLine() {
+        return 0;
+    }
+
+    @Override
+    public int getColumn() {
+        return 0;
+    }
+
+    @Override
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
+    }
+
+    @Override
+    public Type arithmetic(Type type, ASTNode node) {
+        if (type.equals(Double.getInstance())) {
+            return type;
+        }
+        else {
+            return super.arithmetic(type,node);
+        }
+    }
+
+    @Override
+    public Type arithmetic(ASTNode node) {
+        return Double.getInstance();
+    }
+
+    @Override
+    public Type comparison(Type type, ASTNode node) {
+        if (type.equals(Integer.getInstance())) {
+            return type;
+        }
+        else {
+            return super.comparison(type,node);
+        }
+    }
+
+    @Override
+    public Type promotesTo(Type type, ASTNode node) {
+        if (type.equals(Double.getInstance())) {
+            return type;
+        } else {
+            return super.promotesTo(type,node);
+        }
+    }
+
+    @Override
+    public Type canBeCastTo(Type type, ASTNode node) {
+        if (type.equals(Double.getInstance()) || type.equals(Character.getInstance()) || type.equals(Integer.getInstance())) {
+            return type;
+        } else {
+            return super.canBeCastTo(type,node);
+        }
+    }
+
+    @Override
+    public boolean isBuiltInType(ASTNode node) {
+        return true;
     }
 }

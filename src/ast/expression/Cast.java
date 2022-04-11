@@ -7,17 +7,17 @@ import ast.visitor.Visitor;
 
 public class Cast extends AbstractExpression implements Expression {
 
-    private Type type;
+    private Type castType;
     private Expression expression;
 
     public Cast(Type type, Expression expression, int line, int column) {
         super(line, column);
-        this.type = type;
+        this.castType = type;
         this.expression = expression;
     }
 
-    public Type getType() {
-        return type;
+    public Type getCastType() {
+        return castType;
     }
 
     public Expression getExpression() {
@@ -26,7 +26,7 @@ public class Cast extends AbstractExpression implements Expression {
 
     @Override
     public String toString() {
-        return "Cast at line: " + getLine() + "Column: " + getColumn() + ". Type:" + type.toString() + ". Expression=" + expression.toString();
+        return "Cast at line: " + getLine() + "Column: " + getColumn() + ". Type:" + castType.toString() + ". Expression=" + expression.toString();
     }
 
     @Override

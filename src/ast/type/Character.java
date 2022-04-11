@@ -1,10 +1,14 @@
 package ast.type;
 
+import ast.ASTNode;
 import ast.BaseNode;
+import ast.Expression;
 import ast.Type;
 import ast.visitor.Visitor;
 
-public class Character extends BaseNode implements Type {
+import java.util.List;
+
+public class Character extends AbstractType {
 
     private static Character character;
 
@@ -27,5 +31,49 @@ public class Character extends BaseNode implements Type {
     @Override
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
+    }
+
+    @Override
+    public Type arithmetic(Type type, ASTNode node) {
+        if(type instanceof ErrorType){
+            return type;
+        }
+        if(type.equals(Character.getInstance())) {
+            return Integer.getInstance();
+        }
+        return super.arithmetic(type,node);
+    }
+
+    @Override
+    public Type arithmetic(ASTNode node) {
+        return Integer.getInstance();
+    }
+
+    @Override
+    public Type comparison(Type type, ASTNode node) {
+        if (type.equals(Character.getInstance())) {
+            return Integer.getInstance();
+        }
+        return super.comparison(type,node);
+    }
+
+    @Override
+    public Type promotesTo(Type type, ASTNode node) {
+        if(type.equals(Character.getInstance())) {
+            return type;
+        }
+        return super.promotesTo(type,node);
+    }
+
+    @Override
+    public Type canBeCastTo(Type type, ASTNode node) {
+        if(type.equals(Character.getInstance()) || type.equals(Double.getInstance()) || type.equals(Integer.getInstance()))
+            return type;
+        return super.canBeCastTo(type,node);
+    }
+
+    @Override
+    public boolean isBuiltInType(ASTNode node) {
+        return true;
     }
 }

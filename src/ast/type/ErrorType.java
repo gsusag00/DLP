@@ -5,7 +5,7 @@ import ast.Type;
 import ast.errorHandler.ErrorHandler;
 import ast.visitor.Visitor;
 
-public class ErrorType extends BaseNode  implements Type {
+public class ErrorType extends AbstractType {
 
     private String message;
 

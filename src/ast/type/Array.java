@@ -1,10 +1,14 @@
 package ast.type;
 
+import ast.ASTNode;
+import ast.Expression;
 import ast.Type;
 import ast.BaseNode;
 import ast.visitor.Visitor;
 
-public class Array extends BaseNode implements Type {
+import java.util.List;
+
+public class Array extends AbstractType {
 
     private Type arrayType;
     private int dimension;
@@ -39,5 +43,21 @@ public class Array extends BaseNode implements Type {
     @Override
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
+    }
+
+    @Override
+    public boolean isLogical(ASTNode node) {
+        return false;
+    }
+
+    @Override
+    public Type squareBrackets(Type type, ASTNode node) {
+        if(type instanceof ErrorType) {
+            return type;
+        }
+        if (type.equals(Integer.getInstance())){
+            return arrayType;
+        }
+        return new ErrorType(node.getLine(), node.getColumn(), "El indice tiene que ser de tipo entero");
     }
 }

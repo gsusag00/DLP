@@ -29,12 +29,12 @@ mainFunc returns [FuncDefinition ast] locals [List<VarDefinition> varDecs = new 
         $statements
     );};
 
-funcDef returns [FuncDefinition ast] locals [List<VarDefinition> varDecs = new ArrayList<VarDefinition>(),List<Statement> statements = new ArrayList<Statement>(), Type ret = VoidType.getInstance()]:
-     DEF='def' ID ('(' funcVarList ')' ':'|'():') (type{$ret=$type.ast;})? '{'(varDef {$varDecs.addAll($varDef.ast);})* (statement {$statements.add($statement.ast);})*'}' {$ast = new FuncDefinition(
+funcDef returns [FuncDefinition ast] locals [List<VarDefinition> varDecs = new ArrayList<VarDefinition>(), List<VarDefinition> varList = new ArrayList<VarDefinition>(),List<Statement> statements = new ArrayList<Statement>(), Type ret = VoidType.getInstance()]:
+     DEF='def' ID ('(' funcVarList{$varList.addAll($funcVarList.ast);} ')' ':'|'():') (type{$ret=$type.ast;})? '{'(varDef {$varDecs.addAll($varDef.ast);})* (statement {$statements.add($statement.ast);})*'}' {$ast = new FuncDefinition(
         $ID.text,
         $DEF.getLine(),
         $DEF.getCharPositionInLine() + 1,
-        new FunctionType($DEF.getLine(), $DEF.getCharPositionInLine() + 1, $funcVarList.ast, $ret),
+        new FunctionType($DEF.getLine(), $DEF.getCharPositionInLine() + 1, $varList, $ret),
         $varDecs,
         $statements
     );};

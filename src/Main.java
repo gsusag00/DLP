@@ -13,12 +13,11 @@ import introspector.view.IntrospectorTree;
 public class Main {
 	
 	public static void main(String... args) throws Exception {
-		   if (args.length<1) {
-		        System.err.println("Please, pass me the input file.");
-		        return;
-		    }
-		   		 			
-		 // create a lexer that feeds off of input CharStream
+		if (args.length<1) {
+			System.err.println("Please, pass me the input file.");
+			return;
+		}
+		// create a lexer that feeds off of input CharStream
 		CharStream input = CharStreams.fromFileName(args[0]);
 		PmmLexer lexer = new PmmLexer(input);
 
@@ -37,6 +36,7 @@ public class Main {
 		}
 		else{
 			// * The AST is shown
+			//TODO Mirar los errores repetidos y cambiar los mensajes para que den mejor informacion.
 			IntrospectorModel model=new IntrospectorModel("Program", ast);
 			new IntrospectorTree("Introspector", model);
 		}

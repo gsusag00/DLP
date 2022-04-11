@@ -1,12 +1,13 @@
 package ast.type;
 
+import ast.ASTNode;
 import ast.BaseNode;
 import ast.Type;
 import ast.visitor.Visitor;
 
 import java.util.List;
 
-public class Struct extends BaseNode implements Type {
+public class Struct extends AbstractType {
 
     //Posible cambio a un set?
     private List<RecordField> records;
@@ -32,5 +33,15 @@ public class Struct extends BaseNode implements Type {
     @Override
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
+    }
+
+    @Override
+    public Type Dot(String var, ASTNode node) {
+        for(RecordField rf : records) {
+            if(rf.getName().equals(var)) {
+                return rf.getType();
+            }
+        }
+        return super.Dot(var,node);
     }
 }

@@ -1,6 +1,7 @@
 package ast.statement;
 
 import ast.BaseNode;
+import ast.Definition;
 import ast.Expression;
 import ast.Statement;
 import ast.expression.AbstractExpression;
@@ -9,7 +10,7 @@ import ast.visitor.Visitor;
 
 import java.util.List;
 
-public class Function extends AbstractExpression implements Statement, Expression {
+public class Function extends AbstractExpression implements Statement {
 
     private List<Expression> expressions;
     private Variable variable;
@@ -45,4 +46,5 @@ public class Function extends AbstractExpression implements Statement, Expressio
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
     }
+
 }
