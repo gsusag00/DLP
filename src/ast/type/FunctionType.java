@@ -57,4 +57,9 @@ public class FunctionType extends AbstractType {
         }
         return new ErrorType(node.getLine(),node.getColumn(), "Uso erroneo de los parentesis");
     }
+
+    @Override
+    public int numberOfBytes() {
+        return 0;
+    }
 }

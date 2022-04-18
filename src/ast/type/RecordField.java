@@ -55,4 +55,8 @@ public class RecordField extends AbstractType {
         return v.visit(this,p);
     }
 
+    @Override
+    public int numberOfBytes() {
+        return type.numberOfBytes();
+    }
 }

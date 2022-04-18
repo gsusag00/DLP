@@ -60,4 +60,9 @@ public class Array extends AbstractType {
         }
         return new ErrorType(node.getLine(), node.getColumn(), "El indice tiene que ser de tipo entero");
     }
+
+    @Override
+    public int numberOfBytes() {
+        return dimension * arrayType.numberOfBytes();
+    }
 }

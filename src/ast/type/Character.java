@@ -76,4 +76,9 @@ public class Character extends AbstractType {
     public boolean isBuiltInType(ASTNode node) {
         return true;
     }
+
+    @Override
+    public int numberOfBytes() {
+        return 1;
+    }
 }

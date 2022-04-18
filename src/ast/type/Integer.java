@@ -102,5 +102,8 @@ public class Integer extends AbstractType {
         return true;
     }
 
-
+    @Override
+    public int numberOfBytes() {
+        return 2;
+    }
 }

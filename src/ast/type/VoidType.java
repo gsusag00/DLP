@@ -28,4 +28,9 @@ public class VoidType extends AbstractType {
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
     }
+
+    @Override
+    public int numberOfBytes() {
+        return 0;
+    }
 }

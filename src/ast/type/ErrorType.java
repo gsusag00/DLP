@@ -24,4 +24,10 @@ public class ErrorType extends AbstractType {
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
     }
+
+    @Override
+    public int numberOfBytes() {
+        //Tirar una exception
+        return 0;
+    }
 }

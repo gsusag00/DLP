@@ -44,4 +44,13 @@ public class Struct extends AbstractType {
         }
         return super.Dot(var,node);
     }
+
+    @Override
+    public int numberOfBytes() {
+        int counter = 0;
+        for(RecordField r: records){
+            counter += r.numberOfBytes();
+        }
+        return counter;
+    }
 }

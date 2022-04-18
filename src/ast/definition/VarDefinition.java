@@ -13,16 +13,16 @@ public class VarDefinition  extends AbstractDefinition implements Statement{
 
     private String name;
     private Type type;
+    private int offset;
 
     public VarDefinition(int line, int column, String name) {
         super(line, column,name);
         this.name = name;
     }
 
-    public VarDefinition(int line, int column, String name, Type type) {
+    public VarDefinition(int line, int column, String name,Object test) {
         super(line, column,name);
         this.name = name;
-        this.type = type;
     }
 
     public void setType(Type type){
@@ -42,6 +42,14 @@ public class VarDefinition  extends AbstractDefinition implements Statement{
     @Override
     public String toString() {
         return "Var Definition at line: " + getLine() + "Column: " + getColumn() + "Name: " + name + ". Type: " + type.toString();
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 
     @Override
