@@ -24,4 +24,10 @@ public class ErrorType extends BaseNode  implements Type {
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
     }
+
+    @Override
+    public int numberOfBytes() {
+        //Tirar una exception
+        return 0;
+    }
 }

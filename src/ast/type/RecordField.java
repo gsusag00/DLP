@@ -55,4 +55,8 @@ public class RecordField extends BaseNode implements Type {
         return v.visit(this,p);
     }
 
+    @Override
+    public int numberOfBytes() {
+        return type.numberOfBytes();
+    }
 }

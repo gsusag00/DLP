@@ -1,18 +1,14 @@
 package ast.definition;
 
-import ast.BaseNode;
 import ast.Definition;
-import ast.Statement;
 import ast.Type;
-import ast.expression.Variable;
 import ast.visitor.Visitor;
-
-import java.util.List;
 
 public class VarDefinition  extends AbstractDefinition implements Definition{
 
     private String name;
     private Type type;
+    private int offset;
 
     public VarDefinition(int line, int column, String name) {
         super(line, column,name);
@@ -41,6 +37,14 @@ public class VarDefinition  extends AbstractDefinition implements Definition{
     @Override
     public String toString() {
         return "Var Definition at line: " + getLine() + "Column: " + getColumn() + "Name: " + name + ". Type: " + type.toString();
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 
     @Override
