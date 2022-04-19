@@ -26,4 +26,12 @@ public class UnaryMinus extends AbstractExpression implements Expression {
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this, p);
     }
+
+    @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Menos Unario. Linea: %d - Columna: %d - LValue: %b\n",getLine(),getColumn(),getLValue()));
+        sb.append(String.format("%s\t%s \n",tab, expression.toString(tab+"\t")));
+        return sb.toString();
+    }
 }

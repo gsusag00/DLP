@@ -23,7 +23,12 @@ public class Program extends BaseNode {
 
     @Override
     public String toString() {
-        return "Program at line: " + getLine() + "Column: " + getColumn() + ". Definiciones: " + definiciones.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Programa. Linea: %d - Columna: %d. \n",getLine(),getColumn()));
+        for(int i = 0; i<definiciones.size(); i++){
+            sb.append(String.format("\t - %s \n",definiciones.get(i).toString("\t")));
+        }
+        return sb.toString();
     }
 
     @Override

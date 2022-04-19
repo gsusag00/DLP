@@ -1,9 +1,6 @@
 package ast.type;
 
-import ast.ASTNode;
-import ast.BaseNode;
-import ast.Expression;
-import ast.Type;
+import ast.*;
 import ast.definition.VarDefinition;
 import ast.visitor.Visitor;
 
@@ -55,7 +52,18 @@ public class FunctionType extends AbstractType {
                 return new ErrorType(node.getLine(),node.getColumn(), "El tipo del parametro no coincide con el esperado");
             }
         }
-        return new ErrorType(node.getLine(),node.getColumn(), "Uso erroneo de los parentesis");
+        return returnType;
+    }
+
+    @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Tipo Funcion. Linea: %d - Columna: %d - Tipo Retorno: %s \n",getLine(),getColumn(),returnType.toString(tab+"\t")));
+        sb.append(String.format("%s\tParametros. \n",tab));
+        for(VarDefinition def: defs) {
+            sb.append(String.format("%s\t\t- %s \n",tab, def.toString(tab+"\t")));
+        }
+        return sb.toString();
     }
 
     @Override

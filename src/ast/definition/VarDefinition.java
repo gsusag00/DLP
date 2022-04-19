@@ -1,13 +1,8 @@
 package ast.definition;
 
-import ast.BaseNode;
-import ast.Definition;
 import ast.Statement;
 import ast.Type;
-import ast.expression.Variable;
 import ast.visitor.Visitor;
-
-import java.util.List;
 
 public class VarDefinition  extends AbstractDefinition implements Statement{
 
@@ -18,11 +13,13 @@ public class VarDefinition  extends AbstractDefinition implements Statement{
     public VarDefinition(int line, int column, String name) {
         super(line, column,name);
         this.name = name;
+        offset = -1;
     }
 
     public VarDefinition(int line, int column, String name,Object test) {
         super(line, column,name);
         this.name = name;
+        offset = -1;
     }
 
     public void setType(Type type){
@@ -39,9 +36,12 @@ public class VarDefinition  extends AbstractDefinition implements Statement{
         return type;
     }
 
-    @Override
-    public String toString() {
-        return "Var Definition at line: " + getLine() + "Column: " + getColumn() + "Name: " + name + ". Type: " + type.toString();
+
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Definicion de variable. Linea: %d, Columna: %d \n",getLine(),getColumn()));
+        sb.append(String.format("%s\tNombre de la variable: %s - Tipo: %s",tab, name,type.toString(tab+"\n")));
+        return sb.toString();
     }
 
     public int getOffset() {

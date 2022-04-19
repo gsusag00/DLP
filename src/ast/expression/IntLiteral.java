@@ -23,5 +23,12 @@ public class IntLiteral extends AbstractExpression implements Expression {
         return v.visit(this,p);
     }
 
+    @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Entero Literal. Linea: %d - Columna: %d - LValue: %b - Valor: %d \n",getLine(),getColumn(),getLValue(),value));
+        return sb.toString();
+    }
+
 
 }

@@ -20,4 +20,12 @@ public class Boolean extends AbstractOperation implements Expression {
         return v.visit(this,p);
     }
 
+    @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Operacion booleana. Linea: %d - Columna: %d - LValue: %b - Operador: %s \n",getLine(),getColumn(),getLValue(),getOperator()));
+        sb.append(String.format("%s\tExpresion izquierda. %s \n",tab, getLeft().toString(tab+"\t")));
+        sb.append(String.format("%s\tExpresion derecha. %s \n",tab, getRight().toString(tab+"\t")));
+        return sb.toString();
+    }
 }

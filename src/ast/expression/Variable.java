@@ -36,4 +36,12 @@ public class Variable extends AbstractExpression implements Expression {
     public void setDef(Definition def) {
         this.def = def;
     }
+
+    @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Variable. Linea: %d - Columna: %d - LValue: %b - Nombre: %s\n",getLine(),getColumn(),getLValue(),name));
+        sb.append(String.format("%s\t%s \n",tab, def.toString(tab+"\t")));
+        return sb.toString();
+    }
 }

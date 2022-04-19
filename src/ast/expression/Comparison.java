@@ -19,4 +19,13 @@ public class Comparison extends AbstractOperation implements Expression {
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
     }
+
+    @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Comparación. Linea: %d - Columna: %d - LValue: %b - Operador: %s \n",getLine(),getColumn(),getLValue(),getOperator()));
+        sb.append(String.format("%s\tExpresion izquierda. %s \n",tab, getLeft().toString(tab+"\t")));
+        sb.append(String.format("%s\tExpresion derecha. %s \n",tab, getRight().toString(tab+"\t")));
+        return sb.toString();
+    }
 }

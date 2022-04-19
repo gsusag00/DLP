@@ -17,6 +17,6 @@ public interface Type extends ASTNode{
     boolean isBuiltInType(ASTNode node);
     Type parenthesis(ASTNode node, List<Expression> expressions);
 
-
+    String toString(String tab);
     int numberOfBytes();
 }

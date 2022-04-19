@@ -54,4 +54,22 @@ public class IfElse extends BaseNode implements Statement {
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
     }
+
+    @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("If Else. Linea: %d - Columna: %d \n"),getLine(),getColumn());
+        sb.append(String.format("%s\tCondicion - %s \n",tab, expression.toString(tab+"\t")));
+        sb.append(String.format("%s\tSentencias del if. \n",tab));
+        for(Statement st: ifStatements) {
+            sb.append(String.format("%s\t\t- %s \n",tab, st.toString(tab+"\t")));
+        }
+        if(elseStatements.size() > 0) {
+            sb.append(String.format("%s\tSentencias del else \n",tab));
+            for (Statement st : elseStatements) {
+                sb.append(String.format("%s\t\t- %s \n", tab, st.toString(tab+"\t")));
+            }
+        }
+        return sb.toString();
+    }
 }

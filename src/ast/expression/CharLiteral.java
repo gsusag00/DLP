@@ -30,4 +30,11 @@ public class CharLiteral extends AbstractExpression implements Expression {
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
     }
+
+    @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Caracter Literal. Linea: %d - Columna: %d - LValue: %b - Valor: %c \n",getLine(),getColumn(),getLValue(),value));
+        return sb.toString();
+    }
 }

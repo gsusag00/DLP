@@ -26,6 +26,11 @@ public class ErrorType extends AbstractType {
     }
 
     @Override
+    public String toString(String tab) {
+        return toString();
+    }
+
+    @Override
     public int numberOfBytes() {
         //Tirar una exception
         return 0;

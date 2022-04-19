@@ -1,4 +1,5 @@
 import ast.ASTNode;
+import ast.codegenerator.OffsetVisitor;
 import ast.errorHandler.ErrorHandler;
 import ast.visitor.IdentificationVisitor;
 import ast.visitor.TypeCheckingVisitor;
@@ -28,6 +29,7 @@ public class Main {
 
 		ast.accept(new IdentificationVisitor(), null);
 		ast.accept(new TypeCheckingVisitor(),null);
+		ast.accept(new OffsetVisitor(),null);
 
 		// * Check errors
 		if(ErrorHandler.getInstance().hasErrors()){

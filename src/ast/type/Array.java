@@ -62,6 +62,14 @@ public class Array extends AbstractType {
     }
 
     @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Array. Linea: %d - Columna: %d - Dimension: %b\n",getLine(),getColumn(),dimension));
+        sb.append(String.format("%s\tTipo del array.%s \n",tab, arrayType.toString(tab+"\t")));
+        return sb.toString();
+    }
+
+    @Override
     public int numberOfBytes() {
         return dimension * arrayType.numberOfBytes();
     }

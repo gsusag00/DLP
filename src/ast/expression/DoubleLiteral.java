@@ -22,4 +22,11 @@ public class DoubleLiteral extends AbstractExpression implements Expression {
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
     }
+
+    @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Doble Literal. Linea: %d - Columna: %d - LValue: %b - Valor: %f \n",getLine(),getColumn(),getLValue(),value));
+        return sb.toString();
+    }
 }

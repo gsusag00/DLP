@@ -92,6 +92,11 @@ public class Double extends AbstractType {
     }
 
     @Override
+    public String toString(String tab) {
+        return toString();
+    }
+
+    @Override
     public int numberOfBytes() {
         return 4;
     }

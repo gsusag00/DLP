@@ -18,9 +18,17 @@ public class FuncDefinition extends AbstractDefinition implements Definition {
         this.statements = statements;
     }
 
-    @Override
-    public String toString() {
-        return "Func Definition at line: " + getLine() + "Column: " + getColumn() + ". Statements: " + statements.toString() + ". Variable Definitions" + varDefinitions.toString() + ". Name: " + getName() + ". Type" + getType().toString();
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Definición de función. Linea: %d - Columna: %d - Nombre: %s \n", getLine(),getColumn(),getName()));
+        for(int i = 0; i<varDefinitions.size(); i++) {
+            sb.append(String.format("%s\t - %s \n",tab,varDefinitions.get(i).toString(tab + "\t")));
+        }
+        for(int i = 0; i<statements.size(); i++) {
+            sb.append(String.format("%s\t - %s \n",tab,statements.get(i).toString(tab+"\t")));
+        }
+        sb.append(getType().toString(tab+"\n"));
+        return sb.toString();
     }
 
     public List<Statement> getStatements() {

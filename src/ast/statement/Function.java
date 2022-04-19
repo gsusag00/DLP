@@ -39,7 +39,7 @@ public class Function extends AbstractExpression implements Statement {
 
     @Override
     public String toString() {
-        return "Function at line: " + getLine() + "Column: " + getColumn() + ". Name: " + variable.getName() + ". Expressions: " + expressions.toString();
+        return "Funcion at line: " + getLine() + "Column: " + getColumn() + ". Name: " + variable.getName() + ". Expressions: " + expressions.toString();
     }
 
     @Override
@@ -47,4 +47,14 @@ public class Function extends AbstractExpression implements Statement {
         return v.visit(this,p);
     }
 
+    @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Funcion. Linea: %d - Columna: %d \n",getLine(),getColumn()));
+        sb.append(String.format("%s\t%s \n",tab,variable.toString(tab+"\t")));
+        for(Expression exp : expressions) {
+            sb.append(String.format("%s\t- %s \n",tab, exp.toString(tab+"\t")));
+        }
+        return sb.toString();
+    }
 }

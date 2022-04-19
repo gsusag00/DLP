@@ -8,6 +8,7 @@ public class RecordField extends AbstractType {
 
     private String name;
     private Type type;
+    private int offset;
 
     public RecordField(String name, int line, int column) {
         super(line,column);
@@ -56,7 +57,22 @@ public class RecordField extends AbstractType {
     }
 
     @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Campo. Linea: %d - Columna: %d - Nombre: %s - Offset: %d\n",getLine(),getColumn(),name,offset));
+        return sb.toString();
+    }
+
+    @Override
     public int numberOfBytes() {
         return type.numberOfBytes();
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    public int getOffset() {
+        return offset;
     }
 }

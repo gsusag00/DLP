@@ -2,6 +2,7 @@ package ast.type;
 
 import ast.ASTNode;
 import ast.BaseNode;
+import ast.Statement;
 import ast.Type;
 import ast.visitor.Visitor;
 
@@ -43,6 +44,17 @@ public class Struct extends AbstractType {
             }
         }
         return super.Dot(var,node);
+    }
+
+    @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("If Else. Linea: %d - Columna: %d \n",getLine(),getColumn()));
+        sb.append(String.format("%s\tCampos. \n",tab));
+        for(RecordField rf: records) {
+            sb.append(String.format("%s\t\t - %s \n",tab, rf.toString(tab+"\t")));
+        }
+        return sb.toString();
     }
 
     @Override

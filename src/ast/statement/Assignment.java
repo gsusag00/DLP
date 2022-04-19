@@ -41,4 +41,13 @@ public class Assignment extends BaseNode implements Statement {
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
     }
+
+    @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Asignacion. Linea: %d - Columna: %d \n",getLine(),getColumn()));
+        sb.append(String.format("%s\tExpresion izquierda. %s \n",tab, left.toString(tab+"\t")));
+        sb.append(String.format("%s\tExpresion derecha. %s \n",tab, right.toString(tab+"\t")));
+        return sb.toString();
+    }
 }

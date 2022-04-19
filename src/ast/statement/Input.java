@@ -33,4 +33,14 @@ public class Input extends BaseNode implements Statement {
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
     }
+
+    @Override
+    public String toString(String tab) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Input. Linea: %d - Columna: %d \n"),getLine(),getColumn());
+        for(Expression exp : expressions) {
+            sb.append(String.format("%s\t- %s \n",tab, exp.toString(tab+"\t")));
+        }
+        return sb.toString();
+    }
 }
