@@ -263,14 +263,14 @@ expressions returns[ArrayList<Expression> ast = new ArrayList<Expression>()] loc
 /* en bnf poner un comentario donde vaya haber un landa.*/
 
 
-fragment INT: [0]|[1-9] [0-9]*;
+fragment DIGIT: [0-9];
+fragment EXP:([eE] [-+]? INT_CONSTANT);
 fragment REAL_PART: ('.' [0-9]*);
-fragment EXP:([e|E] [-|+]? INT);
 fragment LETTER: [a-zA-Z];
 ID: (LETTER|'_') (LETTER|[0-9]|'_')*;
-INT_CONSTANT: INT;
+INT_CONSTANT: [1-9] DIGIT* | [0];
 CHAR_CONSTANT: '\'' (.|'\\'([0-9][0-9][0-9])|'\\'('n'|'r'|'t'))'\'';
-REAL_CONSTANT: (INT REAL_PART? EXP?) | (REAL_PART EXP?);
+REAL_CONSTANT: (INT_CONSTANT REAL_PART? EXP?) | (REAL_PART EXP?);
 ONELINECOMMENT: '#' .*? '\t'? ('\n'|EOF) -> skip;
 MULTIPLELINECOMMENT: '"""' .*? '"""' -> skip;
 THRASH: (' '|'\n'|'\t'|'\r') -> skip;

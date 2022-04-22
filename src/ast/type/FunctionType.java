@@ -9,6 +9,8 @@ import java.util.List;
 public class FunctionType extends AbstractType {
     private List<VarDefinition> defs;
     private Type returnType;
+    private int localOffset;
+    private int paramsOffset;
 
     public FunctionType(int line, int column, List<VarDefinition> defs, Type type) {
         super(line, column);
@@ -35,6 +37,22 @@ public class FunctionType extends AbstractType {
     @Override
     public String toString() {
         return "Function Type at line: " + getLine() + "Column: " + getColumn() + ". Definitions: " + defs.toString() + ". Return Type: " + returnType.toString();
+    }
+
+    public int getLocalOffset() {
+        return localOffset;
+    }
+
+    public void setLocalOffset(int localOffset) {
+        this.localOffset = localOffset;
+    }
+
+    public int getParamsOffset() {
+        return paramsOffset;
+    }
+
+    public void setParamsOffset(int paramsOffset) {
+        this.paramsOffset = paramsOffset;
     }
 
     @Override

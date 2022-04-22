@@ -12,15 +12,10 @@ import java.util.List;
 public class Prueba {
 
     public static void main(String... args){
-        Variable a = new Variable("a",0,0);
-        VarDefinition adef = new VarDefinition(0,0,"a");
-        adef.setType(new FunctionType(0,0,new ArrayList<>(), Integer.getInstance()));
-        a.setDef(adef);
-
-
-        Function exp = new Function(0,0, a, null);
-        exp.getVariable();
-
-        System.out.println(exp.getVariable().getDef().getType().toString());
+        char a = ' ';
+        char _________1 = 'a';
+        char a_____ = 0;
+        char ______________ = 0;
+        System.out.println("Character: " + (a==' '));
     }
 }

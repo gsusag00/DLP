@@ -19,4 +19,6 @@ public interface Type extends ASTNode{
 
     String toString(String tab);
     int numberOfBytes();
+
+    char suffix();
 }

@@ -23,7 +23,7 @@ public class CharLiteral extends AbstractExpression implements Expression {
 
     @Override
     public String toString() {
-        return "Double Literal at line: " + getLine() + "Column: " + getColumn() + ". Value=" + value;
+        return "Character Literal at line: " + getLine() + "Column: " + getColumn() + ". Value=" + value;
     }
 
     @Override
@@ -34,7 +34,21 @@ public class CharLiteral extends AbstractExpression implements Expression {
     @Override
     public String toString(String tab) {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Caracter Literal. Linea: %d - Columna: %d - LValue: %b - Valor: %c \n",getLine(),getColumn(),getLValue(),value));
+        sb.append(String.format("Caracter Literal. Linea: %d - Columna: %d - LValue: %b - Valor: ",getLine(),getColumn(),getLValue()));
+        switch(value){
+            case '\n':
+                sb.append("\\n");
+                break;
+            case '\t':
+                sb.append("\\t");
+                break;
+            case ' ':
+                sb.append(" ");
+                break;
+            default:
+                sb.append(value);
+        }
+        sb.append("\n");
         return sb.toString();
     }
 }

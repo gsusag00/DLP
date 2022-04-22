@@ -13,6 +13,7 @@ public class OffsetVisitor extends AbstractVisitor<Object,Object> {
     private static final int GLOBAL = 0;
 
     private int globalOffset = 0;
+    //Guardar el offset de todos los parametros y las variables locales en el tipo funcion. Para hacer la vida mas facil en el CodeGen.
     private int localOffset = 0;
     private int structCounter = 0;
 
@@ -46,6 +47,9 @@ public class OffsetVisitor extends AbstractVisitor<Object,Object> {
         }
 
         funcType.getReturnType().accept(this,p);
+
+        funcType.setLocalOffset(localOffset);
+        funcType.setParamsOffset(paramsOffset);
 
         return null;
     }

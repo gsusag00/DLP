@@ -100,4 +100,9 @@ public class Double extends AbstractType {
     public int numberOfBytes() {
         return 4;
     }
+
+    @Override
+    public char suffix() {
+        return 'f';
+    }
 }

@@ -38,7 +38,7 @@ public class Print extends BaseNode implements Statement {
     @Override
     public String toString(String tab) {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Print. Linea: %d - Columna: %d \n"),getLine(),getColumn());
+        sb.append(String.format("Print. Linea: %d - Columna: %d \n",getLine(),getColumn()));
         for(Expression exp : expressions) {
             sb.append(String.format("%s\t- %s \n",tab, exp.toString(tab+"\t")));
         }

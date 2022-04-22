@@ -111,4 +111,9 @@ public class Integer extends AbstractType {
     public int numberOfBytes() {
         return 2;
     }
+
+    @Override
+    public char suffix() {
+        return 'i';
+    }
 }

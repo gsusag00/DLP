@@ -38,8 +38,8 @@ public class Cast extends AbstractExpression implements Expression {
     public String toString(String tab) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("Cast. Linea: %d - Columna: %d - LValue: %b\n",getLine(),getColumn(),getLValue()));
-        sb.append(String.format("%s\tExpresion izquierda. %s \n",tab, castType.toString(tab+"\t")));
-        sb.append(String.format("%s\tExpresion derecha. %s \n",tab, expression.toString(tab+"\t")));
+        sb.append(String.format("%s\tTipo: %s \n",tab, castType.toString(tab+"\t")));
+        sb.append(String.format("%s\tExpresion derecha: %s \n",tab, expression.toString(tab+"\t")));
         return sb.toString();
     }
 }

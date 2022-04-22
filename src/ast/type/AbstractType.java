@@ -90,4 +90,9 @@ public abstract class AbstractType extends BaseNode implements Type{
     public Type parenthesis(ASTNode node, List<Expression> expressions) {
         return new ErrorType(node.getLine(),node.getColumn(), "Uso erroneo de los parentesis");
     }
+
+    @Override
+    public char suffix(){
+        throw new IllegalStateException("No existe sufijo para este tipo");
+    }
 }
