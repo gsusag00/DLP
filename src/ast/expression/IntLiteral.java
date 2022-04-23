@@ -18,6 +18,10 @@ public class IntLiteral extends AbstractExpression implements Expression {
         return "Int Literal at line: " + getLine() + "Column: " + getColumn() + ". Value: " + value;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     @Override
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);

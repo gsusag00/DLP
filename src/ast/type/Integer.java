@@ -25,7 +25,7 @@ public class Integer extends AbstractType {
 
     @Override
     public String toString() {
-        return "Integer";
+        return "int";
     }
 
     @Override

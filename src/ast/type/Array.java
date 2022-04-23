@@ -56,6 +56,9 @@ public class Array extends AbstractType {
             return type;
         }
         if (type.equals(Integer.getInstance())){
+//            if(arrayType instanceof Array) {
+//                return arrayType.squareBrackets(type,node);
+//            }
             return arrayType;
         }
         return new ErrorType(node.getLine(), node.getColumn(), "El indice tiene que ser de tipo entero");

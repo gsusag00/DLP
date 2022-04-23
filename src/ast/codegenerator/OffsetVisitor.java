@@ -34,7 +34,9 @@ public class OffsetVisitor extends AbstractVisitor<Object,Object> {
     @Override
     public Object visit(FuncDefinition funcDef, Object p) {
         localOffset = 0;
-        return super.visit(funcDef, p);
+        super.visit(funcDef,p);
+        funcDef.setLocalOffset(localOffset*-1);
+        return null;
     }
 
     @Override
@@ -48,8 +50,7 @@ public class OffsetVisitor extends AbstractVisitor<Object,Object> {
 
         funcType.getReturnType().accept(this,p);
 
-        funcType.setLocalOffset(localOffset);
-        funcType.setParamsOffset(paramsOffset);
+        funcType.setParamsOffset(paramsOffset-4);
 
         return null;
     }

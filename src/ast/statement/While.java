@@ -47,7 +47,7 @@ public class While extends BaseNode implements Statement {
     @Override
     public String toString(String tab) {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("While. Linea: %d - Columna: %d \n"),getLine(),getColumn());
+        sb.append(String.format("While. Linea: %d - Columna: %d \n",getLine(),getColumn()));
         sb.append(String.format("%s\tCondicion - %s \n",tab, expression.toString(tab+"\t")));
         sb.append(String.format("%s\tSentencias del while. \n",tab));
         for(Statement st: statements) {

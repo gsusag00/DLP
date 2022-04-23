@@ -6,7 +6,7 @@ import ast.visitor.Visitor;
 
 public class DoubleLiteral extends AbstractExpression implements Expression {
 
-    public Double value;
+    public double value;
 
     public DoubleLiteral(double value, int line, int column) {
         super(line, column);
@@ -16,6 +16,10 @@ public class DoubleLiteral extends AbstractExpression implements Expression {
     @Override
     public String toString() {
         return "Double Literal at line: " + getLine() + "Column: " + getColumn() + ". Value=" + value;
+    }
+
+    public double getValue() {
+        return value;
     }
 
     @Override

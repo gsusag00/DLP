@@ -58,7 +58,7 @@ public class IfElse extends BaseNode implements Statement {
     @Override
     public String toString(String tab) {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("If Else. Linea: %d - Columna: %d \n"),getLine(),getColumn());
+        sb.append(String.format("If Else. Linea: %d - Columna: %d \n",getLine(),getColumn()));
         sb.append(String.format("%s\tCondicion - %s \n",tab, expression.toString(tab+"\t")));
         sb.append(String.format("%s\tSentencias del if. \n",tab));
         for(Statement st: ifStatements) {

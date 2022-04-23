@@ -146,9 +146,7 @@ public abstract class AbstractVisitor<TR,TP> implements Visitor<TR,TP>{
 
     @Override
     public TR visit(Input input, TP p) {
-        for(Expression exp: input.getExpressions()){
-            exp.accept(this,p);
-        }
+        input.getExpression().accept(this,null);
         return null;
     }
 

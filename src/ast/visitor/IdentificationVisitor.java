@@ -65,7 +65,13 @@ public class IdentificationVisitor<TR,TP> extends AbstractVisitor<TR,TP>{
 
     @Override
     public TR visit(FunctionType funcType, TP p) {
-        super.visit(funcType, p);
+        for(VarDefinition varDef: funcType.getDefs()) {
+            if(!table.insert(varDef)) {
+                new ErrorType(varDef.getLine(), varDef.getColumn(), "Variable already defined");
+            }
+        }
+
+        funcType.getReturnType().accept(this,null);
         return null;
     }
 }

@@ -21,6 +21,10 @@ public abstract class AbstractDefinition extends BaseNode implements Definition 
         this.name = name;
     }
 
+    public void setType(Type type){
+        this.type = type;
+    }
+
     @Override
     public String getName() {
         return name;

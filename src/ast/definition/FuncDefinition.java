@@ -11,6 +11,7 @@ public class FuncDefinition extends AbstractDefinition implements Definition {
 
     private List<Statement> statements;
     private List<VarDefinition> varDefinitions;
+    private int localOffset;
 
     public FuncDefinition(String name, int line, int column, Type type, List<VarDefinition> varDefinitions, List<Statement> statements) {
         super(line, column,name,type);
@@ -50,5 +51,13 @@ public class FuncDefinition extends AbstractDefinition implements Definition {
     @Override
     public <TR, TP> TR accept(Visitor<TR,TP> v, TP p) {
         return v.visit(this,p);
+    }
+
+    public int getLocalOffset() {
+        return localOffset;
+    }
+
+    public void setLocalOffset(int localOffset) {
+        this.localOffset = localOffset;
     }
 }

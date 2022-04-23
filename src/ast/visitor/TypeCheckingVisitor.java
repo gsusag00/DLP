@@ -140,11 +140,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Object,Object> {
 
     @Override
     public Object visit(Variable var, Object p) {
-        if(var.getDef() == null){
+        if(var.getDef() == null)
             var.setDef(new VarDefinition(var.getLine(),var.getColumn(),var.getName(), new ErrorType(var.getLine(), var.getColumn(), "La variable no esta definida")));
-        } else {
-            var.setType(var.getDef().getType());
-        }
+        var.setType(var.getDef().getType());
 
         var.setLValue(true);
         return null;
@@ -178,17 +176,13 @@ public class TypeCheckingVisitor extends AbstractVisitor<Object,Object> {
 
     @Override
     public Object visit(Input input, Object p) {
-        for(Expression exp: input.getExpressions()){
-            exp.accept(this,p);
-        }
+        input.getExpression().accept(this,p);
 
-        for(Expression exp: input.getExpressions()){
-            if(!exp.getLValue()){
-                new ErrorType(exp.getLine(),exp.getColumn(),"Error: No es un LValue");
-            }
-            if(!exp.getType().isBuiltInType(exp)) {
-                new ErrorType(exp.getLine(),exp.getColumn(),"Error: No es built-in");
-            }
+        if(!input.getExpression().getLValue()){
+            new ErrorType(input.getExpression().getLine(),input.getExpression().getColumn(),"Error: No es un LValue");
+        }
+        if(!input.getExpression().getType().isBuiltInType(input.getExpression())) {
+            new ErrorType(input.getExpression().getLine(),input.getExpression().getColumn(),"Error: No es built-in");
         }
         return null;
     }

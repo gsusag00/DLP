@@ -25,7 +25,7 @@ public class Character extends AbstractType {
 
     @Override
     public String toString() {
-        return "Character";
+        return "char";
     }
 
     @Override
