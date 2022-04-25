@@ -39,8 +39,8 @@ public class AddressCGVisitor extends AbstractVisitor<Object, Object> {
             cg.pusha(((VarDefinition) var.getDef()).getOffset());
         } else {
             cg.pushBP();
-            cg.push(var.getType(), String.valueOf(((VarDefinition) var.getDef()).getOffset()));
-            cg.add(var.getType());
+            cg.push(Integer.getInstance(), String.valueOf(((VarDefinition) var.getDef()).getOffset()));
+            cg.add(Integer.getInstance());
         }
         return null;
     }
@@ -82,8 +82,8 @@ public class AddressCGVisitor extends AbstractVisitor<Object, Object> {
         sb.getLeft().accept(this,null);
         sb.getRight().accept(this.valueCGVisitor,null);
         cg.push(Integer.getInstance(),String.valueOf(sb.getType().numberOfBytes()));
-        cg.mul(sb.getType());
-        cg.add(sb.getType());
+        cg.mul(Integer.getInstance());
+        cg.add(Integer.getInstance());
         return null;
     }
 

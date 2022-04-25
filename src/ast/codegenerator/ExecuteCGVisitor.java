@@ -113,25 +113,45 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
      */
     @Override
     public Object visit(Function function, Object p) {
+        cg.line(function.getLine());
+        function.accept(this.valueCGVisitor,p);
+        if(!function.getType().equals(VoidType.getInstance()))
+            cg.pop(function.getType());
         return null;
     }
 
     /*
-        execute[[IfElse: statement => expression statement* statement2*]]()=
+        execute[[IfElse: statement => expression statement1* statement2*]]()=
             value[[expression]]
-            <jz> else cg.getElseCounter():
+            <jz else> cg.getElseCounter()<:>
                 for(Statement st: statement*)
                     execute[[st]]
-                <jmp> endIf cg.getEndIfCounter()
-            else cg.getElseCounter():
+                <jmp endIf> cg.getEndIfCounter()
+            <else> cg.getElseCounter()<:>
                 for(Statement st: statement2*)
                     execute[[st]]
-            endIf cg.getEndIfCounter:
+            <endIf> cg.getEndIfCounter<:>
             cg.increaseElseCounter()
             cg.increaseEndIfCounter()
      */
     @Override
     public Object visit(IfElse ifElse, Object p) {
+        cg.comment("If");
+        int elseIf = cg.getElseCounter();
+        cg.increaseElseCounter();
+        int endIf = cg.getEndIfCounter();
+        cg.increaseEndIfCounter();
+        ifElse.getExpression().accept(this.valueCGVisitor,p);
+        cg.jz("else",elseIf);
+        for(Statement st : ifElse.getIfStatements()){
+            st.accept(this,p);
+        }
+        cg.jmp("endIf",endIf);
+        cg.label(String.format("else%d",elseIf));
+        for(Statement st : ifElse.getElseStatements()){
+            st.accept(this,p);
+        }
+        cg.label(String.format("endIf%d",endIf));
         return null;
     }
 
@@ -171,28 +191,49 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        execute[[Return: statement => expression]]()=
+        execute[[Return: statement => expression]](funcDefinition)=
             value[[expression]]
-            <ret>...
+            <ret> funcDefinition.getType().getReturnType().numberOfBytes()
+                <,> funcDefinition.getLocalOffset()
+                <,> funcDefinition.getType().getParamsOffset()
      */
     @Override
     public Object visit(Return ret, Object p) {
+        cg.line(ret.getLine());
+        cg.comment("Return");
+        ret.getExpression().accept(this.valueCGVisitor,p);
+        FunctionType ft = (FunctionType)((FuncDefinition) p).getType();
+        cg.ret(ft.numberOfBytes(),((FuncDefinition)p).getLocalOffset(),ft.getParamsOffset());
         return null;
     }
 
     /*
-        execute[[while: statement => expression statement1*]]()=
-            while cg.getWhileCounter():
+        execute[[while: statement => expression statement*]]()=
+            <while> cg.getWhileCounter()<:>
                 value[[expression]]
                 <jz> endWhile cg.getWhileCounter()
-                for(Statement st : statement1*)
+                for(Statement st : statement*)
                     execute[[st]]
-            endWhile cg.getEndWhileCounter():
+            <endWhile> cg.getEndWhileCounter()<:>
             cg.increaseWhileCounter()
             cg.increaseEndWhileCounter()
      */
     @Override
     public Object visit(While whil, Object p) {
+        cg.line(whil.getLine());
+        cg.comment("While");
+        int whi = cg.getWhileCounter();
+        cg.increaseWhileCounter();
+        int end = cg.getWhileCounter();
+        cg.increaseEndWhileCounter();
+        cg.label(String.format("while%d",whi));
+        whil.getExpression().accept(this.valueCGVisitor,p);
+        cg.jz("endwhile",end);
+        for(Statement st: whil.getStatements()){
+            st.accept(this,p);
+        }
+        cg.jmp("while",whi);
+        cg.label(String.format("endwhile%d",end));
         return null;
     }
 

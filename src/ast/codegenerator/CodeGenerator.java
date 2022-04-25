@@ -340,6 +340,11 @@ public class CodeGenerator {
         out.flush();
     }
 
+    public void label(String value) {
+        out.println(String.format(String.format("%s:", value)));
+        out.flush();
+    }
+
     /**
      * Jumps to the label especified as a parameter
      *
@@ -348,7 +353,7 @@ public class CodeGenerator {
      *              else2,...)
      */
     public void jmp(String label, int value) {
-        out.println(String.format("\t%s%d", label, value));
+        out.println(String.format("\tjmp %s%d", label, value));
         out.flush();
     }
 
@@ -360,7 +365,7 @@ public class CodeGenerator {
      *              else2,...)
      */
     public void jz(String label, int value) {
-        out.println(String.format("\t%s%d", label, value));
+        out.println(String.format("\tjz %s%d", label, value));
         out.flush();
     }
 
@@ -372,7 +377,7 @@ public class CodeGenerator {
      *              else2,...)
      */
     public void jnz(String label, int value) {
-        out.println(String.format("\t%s%d", label, value));
+        out.println(String.format("\tjnz %s%d", label, value));
         out.flush();
     }
 
