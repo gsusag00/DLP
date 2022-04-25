@@ -25,7 +25,7 @@ public class Double extends AbstractType {
 
     @Override
     public String toString() {
-        return "real";
+        return "RealType";
     }
 
     @Override

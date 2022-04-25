@@ -1,7 +1,7 @@
 
 #source	"input.1.txt"
 
-	' * Array at line: 1Column: 4. Array Type: real. Dimension=10 v (offset 0)
+	' * ArrayType[of:RealType,size:10] v (offset 0)
 
 ' Invocation to the main function
 call main
@@ -13,10 +13,10 @@ halt
  main:
 	' * Parameters
 	' * Local variables
-	' * real value (offset -4)
+	' * RealType value (offset -4)
 	' * int i (offset -6)
 	' * int j (offset -8)
-	' * Array at line: 7Column: 5. Array Type: Array at line: 7Column: 8. Array Type: int. Dimension=5. Dimension=4 w (offset -48)
+	' * ArrayType[of:ArrayType[of:int,size:5],size:4] w (offset -48)
 	' * Struct at at line: 8Column: 7. Records: [RecordField: . Name='day. Typeint, RecordField: . Name='month. Typeint, RecordField: . Name='year. Typeint] date (offset -54)
 	enter	54
 
@@ -131,14 +131,17 @@ halt
 
 #line	20
 	' * While
-while0:
+
+#line	20
+ while0:
 	push	bp
 	pushi	-6
 	addi
 	loadi
 	pushi	10
 	lti
-	jz endwhile1
+	jz	endwhile0
+	' * While body
 
 #line	21
 	' * Assignment
@@ -155,3 +158,253 @@ while0:
 	addi
 	loadf
 	storef
+
+#line	22
+	' * Write
+	push	bp
+	pushi	-6
+	addi
+	loadi
+	outi
+
+#line	22
+	' * Write
+	pushb	58
+	outb
+
+#line	22
+	' * Write
+	pusha	0
+	push	bp
+	pushi	-6
+	addi
+	loadi
+	pushi	4
+	muli
+	addi
+	loadf
+	outf
+
+#line	22
+	' * Write
+	pushb	32
+	outb
+
+#line	23
+	' * If
+
+#line	23
+	push	bp
+	pushi	-6
+	addi
+	loadi
+	pushi	2
+	modi
+	jz	else0
+	' * if body
+
+#line	24
+	' * Write
+	pushb	111
+	outb
+
+#line	24
+	' * Write
+	pushb	100
+	outb
+
+#line	24
+	' * Write
+	pushb	100
+	outb
+
+#line	24
+	' * Write
+	pushb	10
+	outb
+	jmp	endIf0
+ else0:
+	' * else body
+
+#line	26
+	' * Write
+	pushb	101
+	outb
+
+#line	26
+	' * Write
+	pushb	118
+	outb
+
+#line	26
+	' * Write
+	pushb	101
+	outb
+
+#line	26
+	' * Write
+	pushb	110
+	outb
+
+#line	26
+	' * Write
+	pushb	10
+	outb
+ endIf0:
+
+#line	27
+	' * Assignment
+	push	bp
+	pushi	-6
+	addi
+	push	bp
+	pushi	-6
+	addi
+	loadi
+	pushi	1
+	addi
+	storei
+	jmp	while0
+ endwhile0:
+
+#line	29
+	' * Write
+	pushb	10
+	outb
+
+#line	31
+	' * Assignment
+	push	bp
+	pushi	-6
+	addi
+	pushi	0
+	storei
+
+#line	32
+	' * While
+
+#line	32
+ while1:
+	push	bp
+	pushi	-6
+	addi
+	loadi
+	pushi	4
+	lti
+	jz	endwhile1
+	' * While body
+
+#line	33
+	' * Assignment
+	push	bp
+	pushi	-8
+	addi
+	pushi	0
+	storei
+
+#line	34
+	' * While
+
+#line	34
+ while2:
+	push	bp
+	pushi	-8
+	addi
+	loadi
+	pushi	5
+	lti
+	jz	endwhile2
+	' * While body
+
+#line	35
+	' * Assignment
+	push	bp
+	pushi	-48
+	addi
+	push	bp
+	pushi	-6
+	addi
+	loadi
+	pushi	10
+	muli
+	addi
+	push	bp
+	pushi	-8
+	addi
+	loadi
+	pushi	2
+	muli
+	addi
+	push	bp
+	pushi	-6
+	addi
+	loadi
+	push	bp
+	pushi	-8
+	addi
+	loadi
+	addi
+	storei
+
+#line	36
+	' * Write
+	push	bp
+	pushi	-48
+	addi
+	push	bp
+	pushi	-6
+	addi
+	loadi
+	pushi	10
+	muli
+	addi
+	push	bp
+	pushi	-8
+	addi
+	loadi
+	pushi	2
+	muli
+	addi
+	loadi
+	outi
+
+#line	36
+	' * Write
+	pushb	32
+	outb
+
+#line	37
+	' * Assignment
+	push	bp
+	pushi	-8
+	addi
+	push	bp
+	pushi	-8
+	addi
+	loadi
+	pushi	1
+	addi
+	storei
+	jmp	while2
+ endwhile2:
+
+#line	39
+	' * Write
+	pushb	10
+	outb
+
+#line	40
+	' * Assignment
+	push	bp
+	pushi	-6
+	addi
+	push	bp
+	pushi	-6
+	addi
+	loadi
+	pushi	1
+	addi
+	storei
+	jmp	while1
+ endwhile1:
+	ret	0, 54, 0

@@ -77,7 +77,7 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
         }
         cg.enter(funcDef.getLocalOffset());
         for(Statement st : funcDef.getStatements()){
-            st.accept(this,p);
+            st.accept(this,funcDef);
         }
         if(ft.getReturnType().equals(VoidType.getInstance()))
             cg.ret(0,funcDef.getLocalOffset(),ft.getParamsOffset());
@@ -136,18 +136,22 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
      */
     @Override
     public Object visit(IfElse ifElse, Object p) {
+        cg.line(ifElse.getLine());
         cg.comment("If");
         int elseIf = cg.getElseCounter();
         cg.increaseElseCounter();
         int endIf = cg.getEndIfCounter();
         cg.increaseEndIfCounter();
+        cg.line(ifElse.getLine());
         ifElse.getExpression().accept(this.valueCGVisitor,p);
         cg.jz("else",elseIf);
+        cg.comment("if body");
         for(Statement st : ifElse.getIfStatements()){
             st.accept(this,p);
         }
         cg.jmp("endIf",endIf);
         cg.label(String.format("else%d",elseIf));
+        cg.comment("else body");
         for(Statement st : ifElse.getElseStatements()){
             st.accept(this,p);
         }
@@ -203,7 +207,7 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
         cg.comment("Return");
         ret.getExpression().accept(this.valueCGVisitor,p);
         FunctionType ft = (FunctionType)((FuncDefinition) p).getType();
-        cg.ret(ft.numberOfBytes(),((FuncDefinition)p).getLocalOffset(),ft.getParamsOffset());
+        cg.ret(ft.getReturnType().numberOfBytes(),((FuncDefinition)p).getLocalOffset(),ft.getParamsOffset());
         return null;
     }
 
@@ -224,11 +228,13 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
         cg.comment("While");
         int whi = cg.getWhileCounter();
         cg.increaseWhileCounter();
-        int end = cg.getWhileCounter();
+        int end = cg.getEndWhileCounter();
         cg.increaseEndWhileCounter();
+        cg.line(whil.getLine());
         cg.label(String.format("while%d",whi));
         whil.getExpression().accept(this.valueCGVisitor,p);
         cg.jz("endwhile",end);
+        cg.comment("While body");
         for(Statement st: whil.getStatements()){
             st.accept(this,p);
         }

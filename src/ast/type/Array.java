@@ -37,7 +37,7 @@ public class Array extends AbstractType {
 
     @Override
     public String toString() {
-        return "Array at line: " + getLine() + "Column: " + getColumn() + ". Array Type: " + arrayType.toString() + ". Dimension=" + dimension;
+        return "ArrayType[of:" + arrayType.toString() + ",size:" + dimension + "]";
     }
 
     @Override

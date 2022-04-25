@@ -64,7 +64,7 @@ public class AddressCGVisitor extends AbstractVisitor<Object, Object> {
                 break;
             }
         }
-        cg.add(point.getType());
+        cg.add(Integer.getInstance());
 
         return null;
     }

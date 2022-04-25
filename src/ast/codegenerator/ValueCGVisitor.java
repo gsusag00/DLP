@@ -137,7 +137,7 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
      */
     @Override
     public Object visit(SquareBrackets sB, Object p) {
-        sB.getLeft().accept(this.addressCGVisitor,p);
+        sB.accept(this.addressCGVisitor,p);
         cg.load(sB.getType());
         return null;
     }
