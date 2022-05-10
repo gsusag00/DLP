@@ -46,9 +46,9 @@ public class AddressCGVisitor extends AbstractVisitor<Object, Object> {
     }
 
     /*
-        address[[Point: expression => expression1 ID]]() =
+        address[[Point: expression => left:expression ID]]() =
             address[[expression1]]
-            for(RecordField f: ((Struct)expression1.getType()).getRecords()){
+            for(RecordField f: ((Struct)left.getType()).getRecords()){
                 if(rf.getName().equals(ID)){
                     <pushi> f.getOffset()
                 }
@@ -70,10 +70,10 @@ public class AddressCGVisitor extends AbstractVisitor<Object, Object> {
     }
 
     /*
-        address[[ArrayAccess: expression => expression1 expression2]]()=
-            address[[expression1]]
-            value[[expression2]]
-            <pushi> exprssion1.getType().getBytes()
+        address[[ArrayAccess: expression => out:expression in:expression]]()=
+            address[[out]]
+            value[[in]]
+            <pushi> out.getType().getBytes()
             <muli>
             <addi>
      */

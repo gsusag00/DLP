@@ -26,10 +26,10 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        execute[[Program: program => Definition*]]()=
+        execute[[Program: program => definitions:definition*]]()=
             <call> main
             <halt>
-            for(Definition def: Definition*)
+            for(Definition def: definitions)
                 execute[[def]]
      */
     @Override
@@ -51,11 +51,11 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        execute[[FuncDefinition: definition => ID type statement*]]()=
+        execute[[FuncDefinition: definition => ID type statements:statement*]]()=
         ID<:>
         <enter> type.getLocalOffset()
 
-        for(statement st : statement*)
+        for(statement st : statements)
             execute[[st]]
         if(type.getReturnType == Void.getInstance())
             cg.ret(0,type.getLocalOffset(),type.getParamOffset())
@@ -84,6 +84,12 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
         return null;
     }
 
+    /**
+     * No hace nada solo esta aqui para las comentarios.
+     * @param varDef
+     * @param p
+     * @return
+     */
     @Override
     public Object visit(VarDefinition varDef, Object p) {
         cg.comment(String.format("%s %s (offset %d)", varDef.getType().toString(),varDef.getName(),varDef.getOffset()));
@@ -91,10 +97,10 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        execute[[Assignment: statement => expresison1 expression2]]()=
-            address[[expression1]]
-            value[[expression2]]
-            <store>expression1.getType().suffix()
+        execute[[Assignment: statement => left:expression1 right:expression2]]()=
+            address[[left]]
+            value[[right]]
+            <store>left.getType().suffix()
      */
     public Object visit(Assignment assignment, Object p) {
         cg.line(assignment.getLine());
@@ -106,7 +112,7 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        execute[[Function: statement => variable:expression expression*]]()=
+        execute[[Function: statement => functionName:expression args:expression]]()=
             value[[function]]
             if(!function.getType().equals(VoidType.getInstance())
                 <pop>function.getType().suffix()
@@ -121,14 +127,14 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        execute[[IfElse: statement => expression statement1* statement2*]]()=
+        execute[[IfElse: statement => condition:expression ifStatements:statement* elseStatements:statement*]]()=
             value[[expression]]
             <jz else> cg.getElseCounter()<:>
-                for(Statement st: statement*)
+                for(Statement st: ifStatements)
                     execute[[st]]
                 <jmp endIf> cg.getEndIfCounter()
             <else> cg.getElseCounter()<:>
-                for(Statement st: statement2*)
+                for(Statement st: elseStatements*)
                     execute[[st]]
             <endIf> cg.getEndIfCounter<:>
             cg.increaseElseCounter()
@@ -176,8 +182,8 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        execute[[Print: statement => expression*]]()=
-            for(Expression exp: expression*){
+        execute[[Print: statement => expressions: expression*]]()=
+            for(Expression exp: expressions){
                 value[[exp]]
                 <out> exp.getType().suffix()
             }

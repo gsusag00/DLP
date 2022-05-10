@@ -23,10 +23,10 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
 
 
     /*
-        value[[Arithmetic: expression => expression1 op expression2]]()=
-            value[[expression1]]
-            value[[expression2]]
-            cg.arithmetic(expression.type,op)
+        value[[arithmetic: expression => left:expression op right:expression]]()=
+            value[[left]]
+            value[[right]]
+            cg.arithmetic(arithmetic.type,op)
      */
     @Override
     public Object visit(Arithmetic arithmetic, Object p) {
@@ -37,10 +37,10 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        value[[Boolean: expression => expression1 op expression2]]()=
-            value[[expression1]]
-            value[[expression2]]
-            cg.logical(expression.type,op)
+        value[[boolean: expression => left:expression op right:expression]]()=
+            value[[left]]
+            value[[right]]
+            cg.logical(boolean.type,op)
      */
     @Override
     public Object visit(Boolean bool, Object p) {
@@ -51,9 +51,9 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        value[[Cast: expression => Type expression1]]()=
-            value[[expression1]]
-            cg.cast(expression.getType(), Type)
+        value[[cast: expression => Type exp:expression]]()=
+            value[[exp]]
+            cg.cast(cast.getType(), Type)
      */
     @Override
     public Object visit(Cast cast, Object p) {
@@ -63,7 +63,7 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        value[[CharLiteral: expresion => CHAR_CONSTANT]]()=
+        value[[charLiteral: expresion => CHAR_CONSTANT]]()=
             <pushb>(int) CHAR_CONSTANT
      */
     @Override
@@ -73,10 +73,10 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        value[[Comparison: expression => expression1 op expression2]]()=
-            value[[expression1]]
-            value[[expression2]]
-            cg.comparison(expression.type,op)
+        value[[comparison: expression => left:expression op right:expression]]()=
+            value[[left]]
+            value[[right]]
+            cg.comparison(comparison.type,op)
      */
     @Override
     public Object visit(Comparison comp, Object p) {
@@ -87,7 +87,7 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        value[[DoubleLiteral: expression => DOUBLE_LITERAL]]()=
+        value[[doubleLiteral: expression => DOUBLE_LITERAL]]()=
             <pushf> DOUBLE_LITERAL
      */
     @Override
@@ -97,7 +97,7 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        value[[DoubleLiteral: expression => INT_LITERAL]]()=
+        value[[intLiteral: expression => INT_LITERAL]]()=
             <pushi> INT_LITERAL
      */
     @Override
@@ -107,8 +107,8 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        value[[Not: expression=> expression1]]()=
-            value[[expression1]]
+        value[[not: expression=> negated:expression]]()=
+            value[[negated]]
             <not>
      */
     @Override
@@ -119,9 +119,9 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        value[[Point: expression=> expression1 ID]]()=
-            address[[expression]]
-            <load> expression1.getType().suffix()
+        value[[point: expression=> left:expression ID]]()=
+            address[[point]]
+            <load> left.getType().suffix()
      */
     @Override
     public Object visit(Point point, Object p) {
@@ -131,9 +131,9 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        value[[SquareBrackets: expression=> expression1 expression2]]()=
-            address[[expression]]
-            <load> expression.getType().suffix()
+        value[[squareBrackets: expression=> in:expression out:expression]]()=
+            address[[squareBrackets]]
+            <load> squareBrackets.getType().suffix()
      */
     @Override
     public Object visit(SquareBrackets sB, Object p) {
@@ -143,10 +143,10 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        value[[UnaryMinus: expression=> expression1]]()=
+        value[[unaryMinus: expression=> exp:expression]]()=
             <pushf> 0
-            value[[expression1]]
-            <sub> expression1.getType().suffix()
+            value[[exp]]
+            <sub> exp.getType().suffix()
      */
     @Override
     public Object visit(UnaryMinus minus, Object p) {
@@ -157,9 +157,9 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        value[[Variable: expression => ID]]()=
-            address[[expression]]
-            <load> expression.getType().suffix()
+        value[[variable: expression => ID]]()=
+            address[[variable]]
+            <load> variable.getType().suffix()
      */
     @Override
     public Object visit(Variable var, Object p) {
@@ -169,8 +169,8 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        value[[Function: expression => variable:expression expression*]]()=
-            for(Expression exp: expression*)
+        value[[function: expression => variable:expression args:expression]]()=
+            for(Expression exp: args)
                 value[[exp]]
             <call> variable.getName()
      */
