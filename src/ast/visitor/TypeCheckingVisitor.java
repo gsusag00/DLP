@@ -140,8 +140,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Object,Object> {
 
     @Override
     public Object visit(Variable var, Object p) {
-        if(var.getDef() == null)
-            var.setDef(new VarDefinition(var.getLine(),var.getColumn(),var.getName(), new ErrorType(var.getLine(), var.getColumn(), "La variable no esta definida")));
+        if(var.getDef() == null) {
+            var.setDef(new VarDefinition(var.getLine(), var.getColumn(), var.getName(), var.getType()));
+        }
         var.setType(var.getDef().getType());
 
         var.setLValue(true);
@@ -169,21 +170,32 @@ public class TypeCheckingVisitor extends AbstractVisitor<Object,Object> {
         }
 
         //Si el tipo asociado a la definicion de la funcion es distinto de void.
-        function.setType(function.getVariable().getType().parenthesis(function, function.getExpressions()));
+        if(!(function.getVariable().getType() instanceof VoidType)) {
+            if(!(function.getVariable().getType() instanceof ErrorType))
+                function.setType(function.getVariable().getType().parenthesis(function, function.getExpressions()));
+        }
 
         return null;
     }
 
     @Override
     public Object visit(Input input, Object p) {
-        input.getExpression().accept(this,p);
+        for(Expression exp: input.getExpressions()){
+            exp.accept(this,p);
+        }
 
-        if(!input.getExpression().getLValue()){
-            new ErrorType(input.getExpression().getLine(),input.getExpression().getColumn(),"Error: No es un LValue");
+        for(Expression exp: input.getExpressions()){
+            if(!exp.getLValue()){
+                new ErrorType(exp.getLine(),exp.getColumn(),"Error: Se esperaba un LValue");
+            }
+            if(!exp.getType().isBuiltInType(exp)) {
+                new ErrorType(exp.getLine(),exp.getColumn(),"Error: No es built-in");
+            }
         }
-        if(!input.getExpression().getType().isBuiltInType(input.getExpression())) {
-            new ErrorType(input.getExpression().getLine(),input.getExpression().getColumn(),"Error: No es built-in");
-        }
+
+
+
+
         return null;
     }
 
@@ -192,7 +204,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Object,Object> {
         ifElse.getExpression().accept(this,p);
 
         if(!ifElse.getExpression().getType().isLogical(ifElse)) {
-            new ErrorType(ifElse.getLine(),ifElse.getColumn(),"Se esperaba un valor logico");
+            new ErrorType(ifElse.getLine(),ifElse.getColumn(),"Error: Se esperaba un valor logico");
         }
         for(Statement st : ifElse.getIfStatements()){
             st.accept(this,p);
@@ -207,7 +219,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Object,Object> {
     public Object visit(While whil, Object p) {
         whil.getExpression().accept(this,p);
         if(!whil.getExpression().getType().isLogical(whil)) {
-            new ErrorType(whil.getLine(),whil.getColumn(),"Se esperaba un valor logico");
+            new ErrorType(whil.getLine(),whil.getColumn(),"Error: Se esperaba un valor logico");
         }
         for(Statement st : whil.getStatements()){
             st.accept(this,p);

@@ -43,7 +43,7 @@ public class Struct extends AbstractType {
                 return rf.getType();
             }
         }
-        return super.Dot(var,node);
+        return new ErrorType(node.getLine(),node.getColumn(), String.format("Error: %s no existe en esta estrucutra ",var));
     }
 
     @Override
@@ -64,5 +64,10 @@ public class Struct extends AbstractType {
             counter += r.numberOfBytes();
         }
         return counter;
+    }
+
+    @Override
+    public String getName() {
+        return "Struct";
     }
 }

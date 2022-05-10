@@ -76,4 +76,9 @@ public class Array extends AbstractType {
     public int numberOfBytes() {
         return dimension * arrayType.numberOfBytes();
     }
+
+    @Override
+    public String getName() {
+        return "Array";
+    }
 }

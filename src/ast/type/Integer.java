@@ -53,7 +53,10 @@ public class Integer extends AbstractType {
         if(type.equals(Integer.getInstance())) {
             return type;
         }
-        return super.arithmetic(type,node);
+        if(type instanceof ErrorType){ //Pensar en una manera de cambiar el instanceof por algo mejor.
+            return type;
+        }
+        return new ErrorType(node.getLine(),node.getColumn(), String.format("Error: No se pueden realizar operaciones arimeticas entre %s y Integer, tienen que ser del mismo tipo.",type.getName()));
     }
 
     @Override
@@ -66,7 +69,10 @@ public class Integer extends AbstractType {
         if (type.equals(Integer.getInstance())) {
             return type;
         }
-        return super.comparison(type,node);
+        if(type instanceof ErrorType){ //Pensar en una manera de cambiar el instanceof por algo mejor.
+            return type;
+        }
+        return new ErrorType(node.getLine(),node.getColumn(), String.format("Error: No se pueden realizar comparaciones entre %s y Integer, tienen que ser del mismo tipo.",type.getName()));
     }
 
     @Override
@@ -74,7 +80,10 @@ public class Integer extends AbstractType {
         if (type.equals(Integer.getInstance())) {
             return type;
         }
-        return super.comparison(type,node);
+        if(type instanceof ErrorType){ //Pensar en una manera de cambiar el instanceof por algo mejor.
+            return type;
+        }
+        return new ErrorType(node.getLine(),node.getColumn(), String.format("Error: No se pueden realizar operaciones logicas entre %s y Integer, tienen que ser del mismo tipo.",type.getName()));
     }
 
     @Override
@@ -87,7 +96,10 @@ public class Integer extends AbstractType {
         if(type.equals(Integer.getInstance())) {
             return type;
         }
-        return super.promotesTo(type,node);
+        if(type instanceof ErrorType){ //Pensar en una manera de cambiar el instanceof por algo mejor.
+            return type;
+        }
+        return new ErrorType(node.getLine(),node.getColumn(), String.format("Error: No se permite la asignacion entre %s e Integer",type.getName()));
     }
 
     @Override
@@ -115,5 +127,10 @@ public class Integer extends AbstractType {
     @Override
     public char suffix() {
         return 'i';
+    }
+
+    @Override
+    public String getName() {
+        return "Integer";
     }
 }

@@ -54,11 +54,13 @@ public class FunctionType extends AbstractType {
     @Override
     public Type parenthesis(ASTNode node, List<Expression> expressions) {
         if(expressions.size() != defs.size()) {
-            return new ErrorType(node.getLine(),node.getColumn(), "Numero de parametros equivocado");
+            return new ErrorType(node.getLine(),node.getColumn(), String.format("Error: Numero de parametros equivocado, se esperaban %d parametros", defs.size()));
         }
         for(int i = 0; i<expressions.size(); i++) {
-            if(expressions.get(i).getType().promotesTo(defs.get(i).getType(), node) instanceof ErrorType) {
-                return new ErrorType(node.getLine(),node.getColumn(), "El tipo del parametro no coincide con el esperado");
+            Type t = expressions.get(i).getType().promotesTo(defs.get(i).getType(), node);
+            if(t instanceof ErrorType) {
+                ((ErrorType) t).setMessage("El tipo del parametro no coincide con el esperado");
+                return t;
             }
         }
         return returnType;
@@ -78,5 +80,10 @@ public class FunctionType extends AbstractType {
     @Override
     public int numberOfBytes() {
         return 0;
+    }
+
+    @Override
+    public String getName() {
+        return "FunctionType";
     }
 }

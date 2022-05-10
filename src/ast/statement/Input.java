@@ -9,24 +9,25 @@ import java.util.List;
 
 public class Input extends BaseNode implements Statement {
 
-    private Expression expression;
+    private List<Expression> expressions;
 
-    public Input(int line, int column, Expression expressions) {
+
+    public Input(int line, int column, List<Expression> expressions) {
         super(line, column);
-        this.expression = expressions;
+        this.expressions = expressions;
     }
 
-    public Expression getExpression() {
-        return expression;
+    public List<Expression> getExpressions() {
+        return expressions;
     }
 
-    public void setExpressions(Expression expression) {
-        this.expression = expression;
+    public void setExpressions(List<Expression> expressions) {
+        this.expressions = expressions;
     }
 
     @Override
     public String toString() {
-        return "Input at line: " + getLine() + "Column: " + getColumn() + ". Expressions: " + expression.toString();
+        return "Input at line: " + getLine() + "Column: " + getColumn() + ". Expressions: " + expressions.toString();
     }
 
     @Override
@@ -38,7 +39,9 @@ public class Input extends BaseNode implements Statement {
     public String toString(String tab) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("Input. Linea: %d - Columna: %d \n",getLine(),getColumn()));
-        sb.append(String.format("%s\t- %s \n",tab, expression.toString(tab+"\t")));
+        for(Expression exp : expressions) {
+            sb.append(String.format("%s\t- %s \n", tab, exp.toString(tab + "\t")));
+        }
         return sb.toString();
     }
 }

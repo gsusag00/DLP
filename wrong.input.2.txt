@@ -1,10 +1,10 @@
 date: struct  { 
   day:int;
   month:int;
-  day:double;		# Error 1 Campo repetido
+  day:double;		# Error 1 El campo day ya existe en esta struct.
 };
 
 def main(): {
-  input date.year;	# Error 2 Campo no existe
+  input date.year;	# Error 2 year no existe dentro de date.
 }
 

@@ -1,13 +1,13 @@
 integer:int;
 character:char;
-real, integer:double; # Error 1
+real, integer:double; # Error 1 La variable integer esta repetida.
 
 def p(a:int): {
-  a:char;             # Error 2
+  a:char;             # Error 2 La variable a ya existe en el scope.
 }
 
 def main(): {
   character:double;
-  input integer, i;   # Error 3
-  f();                # Error 4
+  input integer, i;   # Error 3 La variable I no existe
+  f();                # Error 4 La funcion f() no existe
 }

@@ -2,11 +2,11 @@
 i:int;
 
 def f(a:int):int {
-  a:double;						# Error 1 variable duplicada
+  a:double;						# Error 1 Variable a ya existe en este scope
   return 34.5;					# Error 2 se esperaba un entero pero se devuelve un real
 }
 
-def g(b:int, b:double): {		# Error 3 variable duplicada
+def g(b:int, b:double): {		# Error 3 Variable b ya existe en este scope
   return 3;						# Error 4 se esperaba void pero devuelve entero
 }
 

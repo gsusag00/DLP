@@ -166,18 +166,22 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
     }
 
     /*
-        execute[[input: statement => expression]]()=
-            address[[expression]]
-            <in> expression.getType().suffix()
-            <store> expression.getType().suffix()
+        execute[[input: statement => expressions:expression*]]()=
+            for(Expression exp: expressions) {
+                address[[expression]]
+                <in> expression.getType().suffix()
+                <store> expression.getType().suffix()
+            }
      */
     @Override
     public Object visit(Input input, Object p) {
-        cg.line(input.getLine());
-        cg.comment("Read");
-        input.getExpression().accept(this.addressCGVisitor,p);
-        cg.in(input.getExpression().getType());
-        cg.store(input.getExpression().getType());
+        for(Expression exp: input.getExpressions()){
+            cg.line(input.getLine());
+            cg.comment("Read");
+            exp.accept(this.valueCGVisitor,p);
+            cg.in(exp.getType());
+            cg.store(exp.getType());
+        }
         return null;
     }
 

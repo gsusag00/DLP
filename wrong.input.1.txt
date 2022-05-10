@@ -4,8 +4,8 @@ real:double;
 
 def main(): {
   input integer; 
-  character = 8.5;	# Error 1 se esperaba char pero se obtuvo real
-  3 = integer;		# Error 2 se esperaba LValue
-  input integer+2; 	# Error 3 se esperaba LValue
+  character = 8.5;	# Error 1 No se puede asignar double a real.
+  3 = integer;		# Error 2 3 no es un LValue
+  input integer+2; 	# Error 3 La expression integer + 2 no es un lvalue.
 }
 

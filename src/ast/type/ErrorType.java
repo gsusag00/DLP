@@ -1,9 +1,13 @@
 package ast.type;
 
+import ast.ASTNode;
 import ast.BaseNode;
+import ast.Expression;
 import ast.Type;
 import ast.errorHandler.ErrorHandler;
 import ast.visitor.Visitor;
+
+import java.util.List;
 
 public class ErrorType extends AbstractType {
 
@@ -13,6 +17,10 @@ public class ErrorType extends AbstractType {
         super(line, column);
         this.message = message;
         ErrorHandler.getInstance().addError(this);
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
@@ -34,5 +42,15 @@ public class ErrorType extends AbstractType {
     public int numberOfBytes() {
         //Tirar una exception
         return 0;
+    }
+
+    @Override
+    public boolean isBuiltInType(ASTNode node) {
+        return true;
+    }
+
+    @Override
+    public String getName() {
+        return "ErrorType";
     }
 }

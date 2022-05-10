@@ -7,9 +7,9 @@ a:struct  {
 };
 
 def main(): {
-  print i && f; 	# Error 1
-  print a >= 3; 	# Error 2
-  while f:     		# Error 3
-    if f:      		# Error 4
+  print i && f; 	# Error 1  No se puede printear valores logicos.
+  print a >= 3; 	# Error 2 No se puede printear valores logicos
+  while f:     		# Error 3 f no es un valor logico
+    if f:      		# Error 4 No es un valor logico
       print !f;   	# Error 5
 }

@@ -81,7 +81,7 @@ type returns [Type ast] locals [List<RecordField> records = new ArrayList<Record
     | ST='struct' '{' (recordFields {
         for(RecordField r: $recordFields.ast){
             if($records.contains(r)){
-                new ErrorType($ST.getLine(),$ST.getCharPositionInLine() + 1, "Error: Campo duplicado");
+                new ErrorType($ST.getLine(),$ST.getCharPositionInLine() + 1, String.format("Error: El campo %s ya existe en esta estructura", r.getName()));
             }
             else{
                 $records.add(r);
@@ -97,7 +97,7 @@ recordFields returns [List<RecordField> ast = new ArrayList<RecordField>()]: ID1
 
 statement returns [Statement ast] locals [List<Statement> elseBod = new ArrayList<Statement>(),List<Expression> aux = new ArrayList<Expression>()]:
     PRINT='print' (exp1=expression {$aux.add($exp1.ast);}(',' expN=expression {$aux.add($expN.ast);})*) ';' {$ast = new Print($PRINT.getLine(),$PRINT.getCharPositionInLine() + 1, $aux);}
-    |INPUT='input' (exp1=expression) ';' {$ast = new Input($INPUT.getLine(),$INPUT.getCharPositionInLine() + 1, $exp1.ast);}
+    |INPUT='input' (exp1=expression {$aux.add($exp1.ast);}(',' expN=expression {$aux.add($expN.ast);})*) ';' {$ast = new Input($INPUT.getLine(),$INPUT.getCharPositionInLine() + 1, $aux);}
     | left=expression '=' right=expression ';' { $ast = new Assignment(
         $left.ast.getLine(),
         $left.ast.getColumn(),

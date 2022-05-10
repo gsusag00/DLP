@@ -35,13 +35,13 @@ public class Character extends AbstractType {
 
     @Override
     public Type arithmetic(Type type, ASTNode node) {
-        if(type instanceof ErrorType){
-            return type;
-        }
         if(type.equals(Character.getInstance())) {
             return Integer.getInstance();
         }
-        return super.arithmetic(type,node);
+        if(type instanceof ErrorType){ //Pensar en una manera de cambiar el instanceof por algo mejor.
+            return type;
+        }
+        return new ErrorType(node.getLine(),node.getColumn(), String.format("Error: No se pueden realizar operaciones aritmeticas entre %s y Character, tienen que ser del mismo tipo.",type.getName()));
     }
 
     @Override
@@ -54,7 +54,10 @@ public class Character extends AbstractType {
         if (type.equals(Character.getInstance())) {
             return Integer.getInstance();
         }
-        return super.comparison(type,node);
+        if(type instanceof ErrorType){ //Pensar en una manera de cambiar el instanceof por algo mejor.
+            return type;
+        }
+        return new ErrorType(node.getLine(),node.getColumn(), String.format("Error: No se pueden realizar comparaciones entre %s y Double, tienen que ser del mismo tipo.",type.getName()));
     }
 
     @Override
@@ -62,7 +65,10 @@ public class Character extends AbstractType {
         if(type.equals(Character.getInstance())) {
             return type;
         }
-        return super.promotesTo(type,node);
+        if(type instanceof ErrorType){ //Pensar en una manera de cambiar el instanceof por algo mejor.
+            return type;
+        }
+        return new ErrorType(node.getLine(),node.getColumn(), String.format("Error: No se permite la asignacion entre %s y Character",type.getName()));
     }
 
     @Override
@@ -90,5 +96,10 @@ public class Character extends AbstractType {
     @Override
     public char suffix() {
         return 'b';
+    }
+
+    @Override
+    public String getName() {
+        return "Character";
     }
 }
