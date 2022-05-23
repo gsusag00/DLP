@@ -144,7 +144,7 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
 
     /*
         value[[unaryMinus: expression=> exp:expression]]()=
-            <pushf> 0
+            <push> exp.getType().suffix() 0
             value[[exp]]
             <sub> exp.getType().suffix()
      */
