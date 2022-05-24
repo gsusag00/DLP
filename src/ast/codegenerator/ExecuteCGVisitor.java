@@ -178,7 +178,7 @@ public class ExecuteCGVisitor extends AbstractVisitor<Object,Object> {
         for(Expression exp: input.getExpressions()){
             cg.line(input.getLine());
             cg.comment("Read");
-            exp.accept(this.valueCGVisitor,p);
+            exp.accept(this.addressCGVisitor,p);
             cg.in(exp.getType());
             cg.store(exp.getType());
         }

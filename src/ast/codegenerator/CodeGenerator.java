@@ -16,6 +16,8 @@ public class CodeGenerator {
     private int endIfCounter;
     private int whileCounter;
     private int endWhileCounter;
+    private int endTerniaryCounter;
+    private int terniaryFalseCounter;
 
     private CodeGenerator(String input, String output) {
         try {
@@ -28,6 +30,8 @@ public class CodeGenerator {
         endIfCounter = 0;
         whileCounter = 0;
         endWhileCounter = 0;
+        endTerniaryCounter = 0;
+        terniaryFalseCounter = 0;
         source(input);
     }
 
@@ -58,6 +62,14 @@ public class CodeGenerator {
         return endWhileCounter;
     }
 
+    public int getEndTerniaryCounter() {
+        return endTerniaryCounter;
+    }
+
+    public int getTerniaryFalseCounter() {
+        return terniaryFalseCounter;
+    }
+
     public void increaseElseCounter() {
         elseCounter++;
     }
@@ -72,6 +84,14 @@ public class CodeGenerator {
 
     public void increaseEndWhileCounter() {
         endWhileCounter++;
+    }
+
+    public void increaseTerniaryFalseCounter() {
+        terniaryFalseCounter++;
+    }
+
+    public void increaseEndTerniaryCounter() {
+        endTerniaryCounter++;
     }
 
     /**
@@ -455,5 +475,4 @@ public class CodeGenerator {
         out.println();
         out.flush();
     }
-
 }

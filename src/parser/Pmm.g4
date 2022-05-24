@@ -130,6 +130,27 @@ body returns [List<Statement> ast = new ArrayList<Statement>();]: statement {$as
     |'{' (statement  {$ast.add($statement.ast); })+  '}';
 
 expression returns [Expression ast] locals [List<Expression> args = new ArrayList<Expression>()]:
+    ID { $ast = new Variable(
+        $ID.text,
+        $ID.getLine(),
+        $ID.getCharPositionInLine() + 1
+    ); }
+    | REAL_CONSTANT { $ast = new DoubleLiteral(
+        LexerHelper.lexemeToReal($REAL_CONSTANT.text),
+        $REAL_CONSTANT.getLine(),
+        $REAL_CONSTANT.getCharPositionInLine() + 1
+    );}
+    | CHAR_CONSTANT { $ast = new CharLiteral(
+        LexerHelper.lexemeToChar($CHAR_CONSTANT.text),
+        $CHAR_CONSTANT.getLine(),
+        $CHAR_CONSTANT.getCharPositionInLine() + 1
+    );}
+    | INT_CONSTANT { $ast = new IntLiteral(
+        LexerHelper.lexemeToInt($INT_CONSTANT.text),
+        $INT_CONSTANT.getLine(),
+        $INT_CONSTANT.getCharPositionInLine() + 1
+    );}
+    |
     ID '(' (exp1=expression {$args.add($exp1.ast);} (',' expN=expression{$args.add($expN.ast);})*)? ')' { $ast = new Function(
         $ID.getLine(),
         $ID.getCharPositionInLine() + 1,
@@ -193,26 +214,14 @@ expression returns [Expression ast] locals [List<Expression> args = new ArrayLis
             $right.ast,
             $OP.text
     );}
-    | ID { $ast = new Variable(
-        $ID.text,
-        $ID.getLine(),
-        $ID.getCharPositionInLine() + 1
-    ); }
-    | REAL_CONSTANT { $ast = new DoubleLiteral(
-        LexerHelper.lexemeToReal($REAL_CONSTANT.text),
-        $REAL_CONSTANT.getLine(),
-        $REAL_CONSTANT.getCharPositionInLine() + 1
-    );}
-    | CHAR_CONSTANT { $ast = new CharLiteral(
-        LexerHelper.lexemeToChar($CHAR_CONSTANT.text),
-        $CHAR_CONSTANT.getLine(),
-        $CHAR_CONSTANT.getCharPositionInLine() + 1
-    );}
-    | INT_CONSTANT { $ast = new IntLiteral(
-        LexerHelper.lexemeToInt($INT_CONSTANT.text),
-        $INT_CONSTANT.getLine(),
-        $INT_CONSTANT.getCharPositionInLine() + 1
-    );}
+    | cond=expression '?' trueVal=expression ':' falseVal=expression {
+            $ast = new Terniary(
+                $cond.ast,
+                $trueVal.ast,
+                $falseVal.ast,
+                $cond.ast.getLine(),
+                $cond.ast.getColumn()
+        );}
     ;
 
 /*

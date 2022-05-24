@@ -5,6 +5,7 @@ import ast.expression.*;
 import ast.expression.Boolean;
 import ast.statement.Assignment;
 import ast.statement.Function;
+import ast.type.ErrorType;
 import ast.type.Integer;
 import ast.visitor.AbstractVisitor;
 
@@ -83,6 +84,39 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
         comp.getLeft().accept(this,p);
         comp.getRight().accept(this,p);
         cg.comparison(comp.getType(),comp.getOperator());
+        return null;
+    }
+
+    /*
+        value[[terniary: expression => condition:expression true:expression false:expression]]() =
+            value[[condition]]
+            <jz terniaryFalse> cg.getTerniaryFalseCounter()
+                value[[true]]
+                <jmp endTerniary> cg.getEndTerniaryCounter()
+            <terniaryFalse> cg.getTerniaryFalseCounter() <:>
+                value[[false]]
+            <endTerniary> cg.getEndTerniaryCounter() <:>
+            cg.increaseTerniaryFalseCounter()
+            cg.increaseEndTerniaryCounter()
+     */
+    @Override
+    public Object visit(Terniary terniary, Object p) {
+        cg.line(terniary.getLine());
+        cg.comment("Terniary");
+        int falseTerniary = cg.getTerniaryFalseCounter();
+        cg.increaseTerniaryFalseCounter();
+        int endTerniary = cg.getEndTerniaryCounter();
+        cg.increaseEndTerniaryCounter();
+        cg.line(terniary.getLine());
+        terniary.getCondition().accept(this,p);
+        cg.jz("falseTerniary",falseTerniary);
+        cg.comment("true");
+        terniary.getTrueVal().accept(this,p);
+        cg.jmp("endTerniary",endTerniary);
+        cg.label(String.format("falseTerniary%d",falseTerniary));
+        cg.comment("false");
+        terniary.getFalseVal().accept(this,p);
+        cg.label(String.format("endTerniary%d",endTerniary));
         return null;
     }
 
@@ -167,6 +201,8 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
         cg.load(var.getType());
         return null;
     }
+
+
 
     /*
         value[[function: expression => variable:expression args:expression]]()=

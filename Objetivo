@@ -1,0 +1,19 @@
+f(a: int) {
+	write a;
+}
+
+main() {
+
+  var a: int;
+  var x: float;
+
+  x = 0.0;
+  read a;
+
+  write a > 0 ? 1 : 2;
+  f(a > 0 ? a + 1 : a - 1);
+
+  // write x ? 0 : 1; // Error x no es entero
+  // write a > 0 ? x : 1; // Error x y 1 no son del mismo tipo (o hacer conversion implicita).
+
+}

@@ -17,5 +17,7 @@ public class Prueba {
         char a_____ = 0;
         char ______________ = 0;
         System.out.println("Character: " + (a==' '));
+
+        a = a == ' '? 'a' : 'b';
     }
 }

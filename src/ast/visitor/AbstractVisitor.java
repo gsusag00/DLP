@@ -77,6 +77,14 @@ public abstract class AbstractVisitor<TR,TP> implements Visitor<TR,TP>{
     }
 
     @Override
+    public TR visit(Terniary terniary, TP p) {
+        terniary.getCondition().accept(this,p);
+        terniary.getTrueVal().accept(this,p);
+        terniary.getFalseVal().accept(this,p);
+        return null;
+    }
+
+    @Override
     public TR visit(DoubleLiteral lit, TP p) {
         return null;
     }

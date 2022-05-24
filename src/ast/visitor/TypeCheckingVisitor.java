@@ -193,7 +193,28 @@ public class TypeCheckingVisitor extends AbstractVisitor<Object,Object> {
             }
         }
 
+        return null;
+    }
 
+    @Override
+    public Object visit(Terniary terniary, Object p) {
+        terniary.getCondition().accept(this,p);
+
+        if(!terniary.getCondition().getType().isLogical(terniary)) {
+            new ErrorType(terniary.getLine(),terniary.getColumn(),"Error: Se esperaba un valor logico");
+        }
+        terniary.getTrueVal().accept(this,p);
+
+        terniary.getFalseVal().accept(this,p);
+        if(terniary.getTrueVal().getType().isBuiltInType(terniary) && terniary.getFalseVal().getType().isBuiltInType(terniary)) {
+            if(!terniary.getTrueVal().getType().equals(terniary.getFalseVal().getType())) {
+                terniary.setType(new ErrorType(terniary.getLine(),terniary.getColumn(),String.format("Error: %s y %s no son del mismo tipo",terniary.getTrueVal().toString(),terniary.getFalseVal().toString())));
+            } else {
+                terniary.setType(terniary.getTrueVal().getType());
+            }
+        } else {
+            terniary.setType(new ErrorType(terniary.getLine(),terniary.getColumn(),String.format("Error: %s no es built-in",terniary.getTrueVal().getType().isBuiltInType(terniary)? terniary.getFalseVal().toString() : terniary.getTrueVal().toString())));
+        }
 
 
         return null;
