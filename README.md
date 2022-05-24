@@ -6,3 +6,5 @@ Para mi tranquilidad
  - Preguntar por lista para definicion de variables y statements.
 
 # PRACTICOS HECHOS.
+ - Mayo 2016 (Comparacion de rango)
+
