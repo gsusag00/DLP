@@ -6,5 +6,6 @@ Para mi tranquilidad
  - Preguntar por lista para definicion de variables y statements.
 
 # PRACTICOS HECHOS.
- - Operador Ternario
+ - Operador Ternario [rama](https://github.com/gsusag00/DLP/tree/OperadorTernario)
+
 
