@@ -21,7 +21,7 @@ public class BooleanType extends AbstractType{
 
     @Override
     public <TR, TP> TR accept(Visitor<TR, TP> v, TP p) {
-        return null;
+        return v.visit(this,p);
     }
 
     @Override
