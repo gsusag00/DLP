@@ -50,7 +50,7 @@ public abstract class AbstractType extends BaseNode implements Type{
 
     @Override
     public Type logical(ASTNode node) {
-        return new ErrorType(node.getLine(),node.getColumn(), "Error: El nodo no se permite en una operacion de logica, tiene que ser Integer");
+        return new ErrorType(node.getLine(),node.getColumn(), "Error: El nodo no se permite en una operacion de logica, tiene que ser Boolean");
     }
 
     @Override

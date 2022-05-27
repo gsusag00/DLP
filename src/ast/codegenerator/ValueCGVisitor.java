@@ -5,6 +5,7 @@ import ast.expression.*;
 import ast.expression.Boolean;
 import ast.statement.Assignment;
 import ast.statement.Function;
+import ast.type.BooleanType;
 import ast.type.Integer;
 import ast.visitor.AbstractVisitor;
 
@@ -82,7 +83,7 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     public Object visit(Comparison comp, Object p) {
         comp.getLeft().accept(this,p);
         comp.getRight().accept(this,p);
-        cg.comparison(comp.getType(),comp.getOperator());
+        cg.comparison(comp.getLeft().getType(),comp.getOperator());
         return null;
     }
 
@@ -103,6 +104,16 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     @Override
     public Object visit(IntLiteral lit, Object p) {
         cg.push(lit.getType(), String.valueOf(lit.getValue()));
+        return null;
+    }
+
+    /*
+        value[[BoolLiteral: expression => BOOL_LITERAL]]()=
+            <pushi> INT_LITERAL
+     */
+    @Override
+    public Object visit(BoolLiteral lit, Object p) {
+        cg.push(lit.getType(), lit.getValue()? String.valueOf(1) : String.valueOf(0));
         return null;
     }
 
@@ -164,7 +175,10 @@ public class ValueCGVisitor extends AbstractVisitor<Object,Object> {
     @Override
     public Object visit(Variable var, Object p) {
         var.accept(this.addressCGVisitor,null);
-        cg.load(var.getType());
+        if(var.getType().equals(BooleanType.getInstance()))
+            cg.load(Integer.getInstance());
+        else
+            cg.load(var.getType());
         return null;
     }
 

@@ -39,5 +39,9 @@ public class LexerHelper {
 		}
 		return ' ';
     }
+
+    public static boolean lexemeToBool(String text) {
+		return text.equals("true");
+	}
 	
 }

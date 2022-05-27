@@ -63,8 +63,8 @@ public class Double extends AbstractType {
 
     @Override
     public Type comparison(Type type, ASTNode node) {
-        if (type.equals(Integer.getInstance())) {
-            return type;
+        if (type.equals(Double.getInstance())) {
+            return BooleanType.getInstance();
         }
         else {
             if(type instanceof ErrorType){ //Pensar en una manera de cambiar el instanceof por algo mejor.

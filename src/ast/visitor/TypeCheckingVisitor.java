@@ -23,6 +23,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Object,Object> {
         }
 
         Type retType = ((FunctionType) funcDef.getType()).getReturnType();
+        if(retType instanceof Array || retType instanceof Struct) {
+            new ErrorType(retType.getLine(),retType.getColumn(),"Error: Este tipo no se permite para el retorno de las funciones");
+        }
         for(Statement st : funcDef.getStatements()){
             st.accept(this,retType);
         }
@@ -94,6 +97,13 @@ public class TypeCheckingVisitor extends AbstractVisitor<Object,Object> {
     public Object visit(IntLiteral lit, Object p) {
         lit.setLValue(false);
         lit.setType(Integer.getInstance());
+        return null;
+    }
+
+    @Override
+    public Object visit(BoolLiteral lit, Object p) {
+        lit.setLValue(false);
+        lit.setType(BooleanType.getInstance());
         return null;
     }
 

@@ -44,11 +44,6 @@ public class Integer extends AbstractType {
     }
 
     @Override
-    public boolean isLogical(ASTNode node) {
-        return true;
-    }
-
-    @Override
     public Type arithmetic(Type type, ASTNode node) {
         if(type.equals(Integer.getInstance())) {
             return type;
@@ -67,29 +62,29 @@ public class Integer extends AbstractType {
     @Override
     public Type comparison(Type type, ASTNode node) {
         if (type.equals(Integer.getInstance())) {
-            return type;
+            return BooleanType.getInstance();
         }
         if(type instanceof ErrorType){ //Pensar en una manera de cambiar el instanceof por algo mejor.
             return type;
         }
         return new ErrorType(node.getLine(),node.getColumn(), String.format("Error: No se pueden realizar comparaciones entre %s y Integer, tienen que ser del mismo tipo.",type.getName()));
     }
-
-    @Override
-    public Type logical(Type type, ASTNode node) {
-        if (type.equals(Integer.getInstance())) {
-            return type;
-        }
-        if(type instanceof ErrorType){ //Pensar en una manera de cambiar el instanceof por algo mejor.
-            return type;
-        }
-        return new ErrorType(node.getLine(),node.getColumn(), String.format("Error: No se pueden realizar operaciones logicas entre %s y Integer, tienen que ser del mismo tipo.",type.getName()));
-    }
-
-    @Override
-    public Type logical(ASTNode node) {
-        return Integer.getInstance();
-    }
+//
+//    @Override
+//    public Type logical(Type type, ASTNode node) {
+//        if (type.equals(Integer.getInstance())) {
+//            return type;
+//        }
+//        if(type instanceof ErrorType){ //Pensar en una manera de cambiar el instanceof por algo mejor.
+//            return type;
+//        }
+//        return new ErrorType(node.getLine(),node.getColumn(), String.format("Error: No se pueden realizar operaciones logicas entre %s y Integer, tienen que ser del mismo tipo.",type.getName()));
+//    }
+//
+//    @Override
+//    public Type logical(ASTNode node) {
+//        return Integer.getInstance();
+//    }
 
     @Override
     public Type promotesTo(Type type, ASTNode node) {

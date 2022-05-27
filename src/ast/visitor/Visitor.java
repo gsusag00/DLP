@@ -44,6 +44,8 @@ public interface Visitor<TR, TP> {
     TR visit(RecordField recordField,TP p);
     TR visit(Struct struct,TP p);
     TR visit(VoidType voidType,TP p);
+    TR visit(BoolLiteral boolLiteral, TP p);
+    TR visit(BooleanType bool, TP p);
 
 
 }

@@ -52,7 +52,7 @@ public class Character extends AbstractType {
     @Override
     public Type comparison(Type type, ASTNode node) {
         if (type.equals(Character.getInstance())) {
-            return Integer.getInstance();
+            return BooleanType.getInstance();
         }
         if(type instanceof ErrorType){ //Pensar en una manera de cambiar el instanceof por algo mejor.
             return type;

@@ -24,7 +24,6 @@ public abstract class AbstractVisitor<TR,TP> implements Visitor<TR,TP>{
         return null;
     }
 
-    //TODO cambiar las definiciones de variables para que se hago todo en el mismo for, ya que las definiciones de variables son statements
     @Override
     public TR visit(FuncDefinition funcDef, TP p) {
         funcDef.getType().accept(this,p);
@@ -226,6 +225,16 @@ public abstract class AbstractVisitor<TR,TP> implements Visitor<TR,TP>{
 
     @Override
     public TR visit(VoidType voidType, TP p) {
+        return null;
+    }
+
+    @Override
+    public TR visit(BoolLiteral boolLiteral, TP p) {
+        return null;
+    }
+
+    @Override
+    public TR visit(BooleanType bool, TP p) {
         return null;
     }
 }

@@ -8,10 +8,12 @@ grammar Pmm;
     import ast.type.Integer;
     import ast.type.Double;
     import ast.type.Character;
+    import ast.type.BooleanType;
     import ast.statement.*;
     import java.util.ArrayList;
     import java.util.List;
     import ast.expression.Boolean;
+    import ast.expression.BoolLiteral;
 }
 
 program returns [Program ast] locals [List<Definition> def = new ArrayList<Definition>()]: (definitions {$def.addAll($definitions.ast);})* mainFunc {$def.add($mainFunc.ast);} {$ast = new Program(0,0,$def);} EOF ;
@@ -72,6 +74,7 @@ type returns [Type ast] locals [List<RecordField> records = new ArrayList<Record
     DOUBLE='double' { $ast = Double.getInstance();}
     | CHAR='char' { $ast = Character.getInstance();}
     | INT='int' { $ast = Integer.getInstance();}
+    | BOOL='boolean' { $ast = BooleanType.getInstance(); }
     | '[' INT_CONSTANT ']' tipo=type { $ast = new Array(
         $INT_CONSTANT.getLine(),
         $INT_CONSTANT.getCharPositionInLine() + 1,
@@ -213,6 +216,11 @@ expression returns [Expression ast] locals [List<Expression> args = new ArrayLis
         $INT_CONSTANT.getLine(),
         $INT_CONSTANT.getCharPositionInLine() + 1
     );}
+    | BOOL_CONSTANT { $ast = new BoolLiteral(
+        LexerHelper.lexemeToBool($BOOL_CONSTANT.text),
+        $BOOL_CONSTANT.getLine(),
+        $BOOL_CONSTANT.getCharPositionInLine() + 1
+    );}
     ;
 
 /*
@@ -267,6 +275,7 @@ fragment DIGIT: [0-9];
 fragment EXP:([eE] [-+]? INT_CONSTANT);
 fragment REAL_PART: ('.' [0-9]*);
 fragment LETTER: [a-zA-Z];
+BOOL_CONSTANT: ('true' | 'false');
 ID: (LETTER|'_') (LETTER|[0-9]|'_')*;
 INT_CONSTANT: [1-9] DIGIT* | [0];
 CHAR_CONSTANT: '\'' (.|'\\'([0-9][0-9][0-9])|'\\'('n'|'r'|'t'))'\'';

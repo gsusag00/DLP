@@ -32,6 +32,7 @@ public class Main {
 		ast.accept(new IdentificationVisitor(), null);
 		ast.accept(new TypeCheckingVisitor(),null);
 
+
 		// * Check errors
 		if(ErrorHandler.getInstance().hasErrors()){
 			// * Show errors
